@@ -14,3 +14,5 @@ The bot is made in Intellij Idea so have fun trying to get everything set up.
 My code is spaghetti :)
 
 This is the direct path to all the .java files: https://github.com/floriankorstanje/DiscordBot/tree/master/DiscordBot/src/com/florn
+
+Also the .jar file you can find will not work for you since I have an authentication thing where the bot will only get the token if it is run by me.
