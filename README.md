@@ -12,3 +12,5 @@ You can try running the bot youself but you'll neet to get a token and a discord
 The bot is made in Intellij Idea so have fun trying to get everything set up.
 
 My code is spaghetti :)
+
+This is the direct path to all the .java files: https://github.com/floriankorstanje/DiscordBot/tree/master/DiscordBot/src/com/florn
