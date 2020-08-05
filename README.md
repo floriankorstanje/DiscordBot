@@ -1,4 +1,5 @@
 # DiscordBot
+# I'm currently rewriting my bot because this code is just bad
 Snaekyy Discord Server: https://discord.gg/Kyj7NHa
 
 DiscordBot is my discord bot for the discord server Snaekyy
