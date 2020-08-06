@@ -6,8 +6,10 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
@@ -101,5 +103,13 @@ public class Util {
             // Either timeout or unreachable or failed DNS lookup.
             return false;
         }
+    }
+
+    public static String generateRandom(int length) {
+        byte[] arr = new byte[length];
+        Vars.r.nextBytes(arr);
+        String generated = new String(arr, Charset.forName("UTF-8"));
+
+        return String.format("%040x", new BigInteger(1, generated.getBytes()));
     }
 }

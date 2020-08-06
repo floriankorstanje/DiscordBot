@@ -11,11 +11,13 @@ import net.dv8tion.jda.api.entities.Activity;
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.InetAddress;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /*
 http://62.238.142.81:420/aa/pizza.PNG
@@ -57,8 +59,23 @@ public class Main {
             Files.createFile(Paths.get(Vars.scoreFile));
         }
 
+        //Check if the authentication file exists
+        if(!new File(Vars.authFile).exists()) {
+            //Create auth file and add a auth key to it
+            Files.createFile(Paths.get(Vars.authFile));
+
+            //Generate random hex string
+            String authKey = Util.generateRandom(64);
+
+            //Add the auth key to the file
+            ArrayList<String> lines = new ArrayList<>();
+            lines.add(authKey);
+
+            IO.writeSmallTextFile(lines, Vars.authFile);
+        }
+
         //Get the bot token from my website
-        String code = InetAddress.getLocalHost().getHostName();
+        String code = IO.readSmallTextFile(Vars.authFile).get(0);
         String token = IO.getPageContents(new URL("http://10.0.0.8/aa/BotToken.php?code=" + code));
 
         System.out.println("Code: " + code);

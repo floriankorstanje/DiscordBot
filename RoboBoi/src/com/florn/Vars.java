@@ -8,6 +8,7 @@ public class Vars {
     //Other
     public static String scoreFile = System.getProperty("user.dir") + "/RoboBoi_Scores.txt";
     public static String settingsFile = System.getProperty("user.dir") + "/RoboBoi_Settings.txt";
+    public static String authFile = System.getProperty("user.dir") + "/auth.txt";
     public static String botPrefix = "$";
     public static Guild guild = null;
     public static Random r = new Random();
