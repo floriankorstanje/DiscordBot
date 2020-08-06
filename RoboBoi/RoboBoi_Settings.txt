@@ -1,0 +1,3 @@
+randompointsmessage:1,5
+randompointsmessagedelay:60000
+callpointsdelay:300000
