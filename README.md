@@ -1,2 +1,3 @@
 # RoboBoi
-Snaekyy Discord Server: https://discord.gg/Kyj7NHa
+The directory "RoboBoi" is the version of the bot I will be updating and working on. "DiscordBot" is an old version of the bot.
+Discord server: https://discord.gg/sKJS4Qa
