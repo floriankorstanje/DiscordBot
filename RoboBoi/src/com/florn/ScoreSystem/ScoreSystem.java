@@ -288,7 +288,7 @@ public class ScoreSystem {
                 requester.getScore() > 500,
                 requester.getScore() > 2000,
                 (double)requester.getScore() / 500 * 100,
-                (double)requester.getScore() / 500 * 100
+                (double)requester.getScore() / 2000 * 100
         );
     }
 
