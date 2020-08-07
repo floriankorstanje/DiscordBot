@@ -21,13 +21,6 @@ public class AddScoreEvents extends ListenerAdapter {
         //Add the user to the hasSent array to give them some points
         if(!ScoreSystem.hasSent.contains(event.getMember()))
             ScoreSystem.hasSent.add(event.getMember());
-
-        try {
-            //Update the role
-            ScoreSystem.updateUserRole(event.getMember(), event.getGuild());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

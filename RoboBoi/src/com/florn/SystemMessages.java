@@ -24,7 +24,6 @@ public class SystemMessages extends ListenerAdapter {
         try {
             //Make sure the entire score file is right
             ScoreSystem.fixScoreList(event.getGuild());
-            throw new IOException();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -38,7 +37,6 @@ public class SystemMessages extends ListenerAdapter {
         try {
             //Remove the left user's ID from the score file
             ScoreSystem.removeUserId(event.getMember().getId());
-            throw new IOException();
         } catch (IOException e) {
             e.printStackTrace();
         }

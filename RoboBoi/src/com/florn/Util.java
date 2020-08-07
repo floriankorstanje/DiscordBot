@@ -10,6 +10,7 @@ import java.math.BigInteger;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
@@ -105,10 +106,11 @@ public class Util {
         }
     }
 
-    public static String generateRandom(int length) {
+    public static String generateCode(int length) {
+        //Generate a random code for bot authentication
         byte[] arr = new byte[length];
         Vars.r.nextBytes(arr);
-        String generated = new String(arr, Charset.forName("UTF-8"));
+        String generated = new String(arr, StandardCharsets.US_ASCII);
 
         return String.format("%040x", new BigInteger(1, generated.getBytes()));
     }

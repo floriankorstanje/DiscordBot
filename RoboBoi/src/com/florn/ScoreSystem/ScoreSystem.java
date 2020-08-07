@@ -35,6 +35,7 @@ public class ScoreSystem {
                         for(Member m : hasSent) {
                             Range rRange = Util.getScoreSettings().getRandomPointsPerMessage();
                             addScore(m, Util.random(rRange.getMin(), rRange.getMax()));
+                            updateUserRole(m, Vars.guild);
                         }
                     }
 
@@ -87,7 +88,7 @@ public class ScoreSystem {
 
     public static void updateUserRole(Member m, Guild g) throws IOException {
         //Don't do anything if the member is a bot
-        if(!m.getUser().isBot())
+        if(m.getUser().isBot())
             return;
 
         //Get the basic information about someone's score
@@ -114,13 +115,12 @@ public class ScoreSystem {
                 g.removeRoleFromMember(m, higherPeeps).complete();
                 g.removeRoleFromMember(m, superPeeps).complete();
             } else if(score > 25 && score <= 500) {
+                //Remove all the higher roles since the user doesn't have the score for them anymore
+                g.removeRoleFromMember(m, higherPeeps).complete();
+                g.removeRoleFromMember(m, superPeeps).complete();
+
                 //If the user has between 25 and 500 points, they get normal peeps
-
                 if(!hasRole(m, normalPeeps)) {
-                    //Remove all the higher roles since the user doesn't have the score for them anymore
-                    g.removeRoleFromMember(m, higherPeeps).complete();
-                    g.removeRoleFromMember(m, superPeeps).complete();
-
                     //Add the normal peeps role
                     g.addRoleToMember(m, normalPeeps).complete();
 
@@ -128,12 +128,11 @@ public class ScoreSystem {
                     SystemMessages.announceUserNewRole(m, normalPeeps, g);
                 }
             } else if(score > 500 && score <= 2000) {
+                //Remove super peeps since the user doesn't have the score for it anymore
+                g.removeRoleFromMember(m, superPeeps).complete();
+
                 //If the user has between 500 and 2000 points, they get higher peeps
-
                 if(!hasRole(m, higherPeeps)) {
-                    //Remove super peeps since the user doesn't have the score for it anymore
-                    g.removeRoleFromMember(m, superPeeps).complete();
-
                     //Add the normal and higher peeps role
                     g.addRoleToMember(m, normalPeeps).complete();
                     g.addRoleToMember(m, higherPeeps).complete();

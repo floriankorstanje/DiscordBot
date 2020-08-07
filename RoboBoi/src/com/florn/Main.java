@@ -38,7 +38,7 @@ public class Main {
     public static JDA jda;
 
     public static void main(String[] args) throws IOException, LoginException {
-        System.out.println("Starting RoboBoi...");
+        System.out.println("Starting RoboBoi version " + Vars.version);
 
         //Check if settings file exists.
         if(!new File(Vars.settingsFile).exists()) {
@@ -65,7 +65,7 @@ public class Main {
             Files.createFile(Paths.get(Vars.authFile));
 
             //Generate random hex string
-            String authKey = Util.generateRandom(64);
+            String authKey = Util.generateCode(64);
 
             //Add the auth key to the file
             ArrayList<String> lines = new ArrayList<>();
@@ -92,6 +92,7 @@ public class Main {
         jda.addEventListener(new CommandHandler());
         jda.addEventListener(new AddScoreEvents());
 
+        //Start some threads
         ScoreSystem.messageScoreThread();
     }
 }
