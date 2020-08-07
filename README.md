@@ -1,6 +1,8 @@
 # RoboBoi
 The directory "RoboBoi" is the version of the bot I will be updating and working on. "DiscordBot" is an old version of the bot.
 
+Easy source code link: https://github.com/floriankorstanje/RoboBoi/tree/master/RoboBoi/src/com/florn
+
 Discord server: https://discord.gg/sKJS4Qa
 
 Bot needs JDA 4.1.0_84 to work, this in included in the files
