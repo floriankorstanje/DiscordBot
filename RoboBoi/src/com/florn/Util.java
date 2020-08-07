@@ -9,15 +9,13 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
 public class Util {
     //Shamelessly stolen from https://www.geeksforgeeks.org/remove-an-element-at-specific-index-from-an-array-in-java/
-    public static String[] removeTheElement(String[] arr, int index)
-    {
+    public static String[] removeTheElement(String[] arr, int index) {
         // If the array is empty
         // or the index is not in array range
         // return the original array
@@ -70,13 +68,13 @@ public class Util {
             String[] vars = Arrays.copyOf(fullFile.toArray(), fullFile.toArray().length, String[].class);
 
             //Remove variable naming
-            for(int i = 0; i < vars.length; i++) {
+            for (int i = 0; i < vars.length; i++) {
                 vars[i] = vars[i].split(":")[1];
             }
 
             //Set all the values gotten from the file
             String[] range = vars[0].split(",");
-            Range r = new Range(Integer.parseInt(range[0]),Integer.parseInt(range[1]));
+            Range r = new Range(Integer.parseInt(range[0]), Integer.parseInt(range[1]));
             toReturn.setRandomPointsPerMessage(r);
 
             int randomPointsPerMessageDelay = Integer.parseInt(vars[1]);

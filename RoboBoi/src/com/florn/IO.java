@@ -23,7 +23,7 @@ public class IO {
         Scanner sc = new Scanner(url.openStream());
         StringBuffer sb = new StringBuffer();
 
-        while(sc.hasNext()) {
+        while (sc.hasNext()) {
             sb.append(sc.next());
         }
 

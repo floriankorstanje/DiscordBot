@@ -11,13 +11,10 @@ import net.dv8tion.jda.api.entities.Activity;
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.net.InetAddress;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.UUID;
 
 /*
 http://62.238.142.81:420/aa/pizza.PNG
@@ -41,7 +38,7 @@ public class Main {
         System.out.println("Starting RoboBoi version " + Vars.version);
 
         //Check if settings file exists.
-        if(!new File(Vars.settingsFile).exists()) {
+        if (!new File(Vars.settingsFile).exists()) {
             //Create settings file with default settings if it doesn't exist
             Files.createFile(Paths.get(Vars.settingsFile));
 
@@ -54,13 +51,13 @@ public class Main {
         }
 
         //Check if score file exists.
-        if(!new File(Vars.scoreFile).exists()) {
+        if (!new File(Vars.scoreFile).exists()) {
             //Create score file with default settings if it doesn't exist
             Files.createFile(Paths.get(Vars.scoreFile));
         }
 
         //Check if the authentication file exists
-        if(!new File(Vars.authFile).exists()) {
+        if (!new File(Vars.authFile).exists()) {
             //Create auth file and add a auth key to it
             Files.createFile(Paths.get(Vars.authFile));
 

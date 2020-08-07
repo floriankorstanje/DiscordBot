@@ -15,11 +15,11 @@ public class AddScoreEvents extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
         //If the user is a bot, don't give them points
-        if(event.getMember().getUser().isBot())
+        if (event.getMember().getUser().isBot())
             return;
 
         //Add the user to the hasSent array to give them some points
-        if(!ScoreSystem.hasSent.contains(event.getMember()))
+        if (!ScoreSystem.hasSent.contains(event.getMember()))
             ScoreSystem.hasSent.add(event.getMember());
     }
 
@@ -32,12 +32,12 @@ public class AddScoreEvents extends ListenerAdapter {
     @Override
     public void onGuildMessageReactionAdd(@Nonnull GuildMessageReactionAddEvent event) {
         //If the user is a bot, don't give them points
-        if(event.getMember().getUser().isBot())
+        if (event.getMember().getUser().isBot())
             return;
 
         try {
             //Add 25 points to the user because they accepted the server rules
-            if(event.getMessageId().equals(Vars.ruleAcceptMessage))
+            if (event.getMessageId().equals(Vars.ruleAcceptMessage))
                 ScoreSystem.addScore(event.getMember(), 25);
 
             //Add 1 point for adding a reaction
@@ -53,12 +53,12 @@ public class AddScoreEvents extends ListenerAdapter {
     @Override
     public void onGuildMessageReactionRemove(@Nonnull GuildMessageReactionRemoveEvent event) {
         //If the user is a bot, don't give them points
-        if(event.getMember().getUser().isBot())
+        if (event.getMember().getUser().isBot())
             return;
 
         try {
             //Remove 25 points from the user because they didn't accept the rules
-            if(event.getMessageId().equals(Vars.ruleAcceptMessage))
+            if (event.getMessageId().equals(Vars.ruleAcceptMessage))
                 ScoreSystem.addScore(event.getMember(), -25);
 
             //Remove 1 points because they removed a reaction, this prevents people from using an auto clicker on a reaction

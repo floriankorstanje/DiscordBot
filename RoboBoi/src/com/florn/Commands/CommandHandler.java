@@ -1,10 +1,11 @@
 package com.florn.Commands;
 
-import com.florn.Log;
+import com.florn.Output;
 import com.florn.Util;
 import com.florn.Vars;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
 import javax.annotation.Nonnull;
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ public class CommandHandler extends ListenerAdapter {
         //Set the prefix to and easier accessible variable
         String p = Vars.botPrefix;
 
-        if(msg.startsWith(p)) {
+        if (msg.startsWith(p)) {
             //Boolean to indicate if the command is recognized and if the command executed successfully
             boolean recognized = true;
             boolean success;
@@ -35,10 +36,10 @@ public class CommandHandler extends ListenerAdapter {
 
             //Check if the command is known and then execute it.
             //Commands return boolean if they succeeded or not
-            if(cmd.equalsIgnoreCase("help")) {
+            if (cmd.equalsIgnoreCase("help")) {
                 //Command $help
                 success = Commands.help(event);
-            } else if(cmd.equalsIgnoreCase("score")) {
+            } else if (cmd.equalsIgnoreCase("score")) {
                 //Command $score
                 try {
                     success = Commands.Score(event, args);
@@ -46,10 +47,10 @@ public class CommandHandler extends ListenerAdapter {
                     e.printStackTrace();
                     success = false;
                 }
-            } else if(cmd.equalsIgnoreCase("modscore")) {
+            } else if (cmd.equalsIgnoreCase("modscore")) {
                 //Command $modscore
                 success = Commands.modScore(event, args);
-            } else if(cmd.equalsIgnoreCase("mcserver")) {
+            } else if (cmd.equalsIgnoreCase("mcserver")) {
                 //Command $mcserver
                 success = Commands.minecraftServer(event);
             } else {
@@ -59,7 +60,7 @@ public class CommandHandler extends ListenerAdapter {
             }
 
             //Log the command
-            Log.Log(cmd, originalMessage, event.getMember(), event.getChannel(), recognized, success);
+            Output.Log(cmd, originalMessage, event.getMember(), event.getChannel(), recognized, success);
         }
     }
 }

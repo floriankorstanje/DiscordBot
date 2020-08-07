@@ -24,15 +24,15 @@ public class ScoreSystem {
 
         new Thread(() -> {
             //Loop while the thread isn't interrupted
-            while(!Thread.interrupted()) {
+            while (!Thread.interrupted()) {
                 try {
                     hasSent.clear();
                     int delay = Util.getScoreSettings().getRandomPointsPerMessageDelay();
                     Thread.sleep(delay);
 
                     //Add score to users that have sent a message
-                    if(hasSent != null) {
-                        for(Member m : hasSent) {
+                    if (hasSent != null) {
+                        for (Member m : hasSent) {
                             Range rRange = Util.getScoreSettings().getRandomPointsPerMessage();
                             addScore(m, Util.random(rRange.getMin(), rRange.getMax()));
                             updateUserRole(m, Vars.guild);
@@ -55,7 +55,7 @@ public class ScoreSystem {
                     Thread.sleep(Util.getScoreSettings().getCallPointsDelay());
 
                     //If someone joined the AFK channel they will not gain points
-                    if(e.getChannelJoined().getId().equals(Vars.afkChannel))
+                    if (e.getChannelJoined().getId().equals(Vars.afkChannel))
                         return;
 
                     //If the user left the voice channel the loop will stop
@@ -66,14 +66,14 @@ public class ScoreSystem {
                     List<Member> members = removeBotsFromMemberList(e.getChannelJoined().getMembers());
 
                     //Only give points if there is more than 1 person in the call (excluding bots)
-                    if(members.size() > 1) {
-                        if(total >= 50)
+                    if (members.size() > 1) {
+                        if (total >= 50)
                             return;
 
                         total++;
 
                         //If the user is deafened, don't give them points as they're not actively using the channel
-                        if(!e.getMember().getVoiceState().isDeafened())
+                        if (!e.getMember().getVoiceState().isDeafened())
                             addScore(e.getMember(), 1);
 
                         //Update the users role so if they have enough points for a higher role they instantly get it
@@ -88,7 +88,7 @@ public class ScoreSystem {
 
     public static void updateUserRole(Member m, Guild g) throws IOException {
         //Don't do anything if the member is a bot
-        if(m.getUser().isBot())
+        if (m.getUser().isBot())
             return;
 
         //Get the basic information about someone's score
@@ -101,38 +101,38 @@ public class ScoreSystem {
         Role superPeeps = g.getRoleById(Vars.superPeepsRole);
 
         //If the user does not have line in the score file yet, create one
-        if(userLine == -1) {
+        if (userLine == -1) {
             lines.add(m.getId() + ":0");
         } else {
             //Get some basic data about the user's score
             String oldLine = lines.get(userLine);
             int score = Integer.parseInt(oldLine.split(":")[1]);
 
-            if(score < 25) {
+            if (score < 25) {
                 //If the user's score is less than 25, it means that they haven't accepted the rules yet.
 
                 g.removeRoleFromMember(m, normalPeeps).complete();
                 g.removeRoleFromMember(m, higherPeeps).complete();
                 g.removeRoleFromMember(m, superPeeps).complete();
-            } else if(score > 25 && score <= 500) {
+            } else if (score > 25 && score <= 500) {
                 //Remove all the higher roles since the user doesn't have the score for them anymore
                 g.removeRoleFromMember(m, higherPeeps).complete();
                 g.removeRoleFromMember(m, superPeeps).complete();
 
                 //If the user has between 25 and 500 points, they get normal peeps
-                if(!hasRole(m, normalPeeps)) {
+                if (!hasRole(m, normalPeeps)) {
                     //Add the normal peeps role
                     g.addRoleToMember(m, normalPeeps).complete();
 
                     //Announce that the user got a new role
                     SystemMessages.announceUserNewRole(m, normalPeeps, g);
                 }
-            } else if(score > 500 && score <= 2000) {
+            } else if (score > 500 && score <= 2000) {
                 //Remove super peeps since the user doesn't have the score for it anymore
                 g.removeRoleFromMember(m, superPeeps).complete();
 
                 //If the user has between 500 and 2000 points, they get higher peeps
-                if(!hasRole(m, higherPeeps)) {
+                if (!hasRole(m, higherPeeps)) {
                     //Add the normal and higher peeps role
                     g.addRoleToMember(m, normalPeeps).complete();
                     g.addRoleToMember(m, higherPeeps).complete();
@@ -140,10 +140,10 @@ public class ScoreSystem {
                     //Announce that the user got a new role
                     SystemMessages.announceUserNewRole(m, higherPeeps, g);
                 }
-            } else if(score > 2000) {
+            } else if (score > 2000) {
                 //If the user has more than 2000 points, they get super peeps
 
-                if(!hasRole(m, superPeeps)) {
+                if (!hasRole(m, superPeeps)) {
                     //No roles to remove since the user gets the highest role available
 
                     //Add all the roles
@@ -165,7 +165,7 @@ public class ScoreSystem {
     private static List<Member> removeBotsFromMemberList(List<Member> list) {
         ArrayList<Member> newList = new ArrayList<>();
 
-        for(Member m : list) {
+        for (Member m : list) {
             if (!m.getUser().isBot())
                 newList.add(m);
         }
@@ -176,8 +176,8 @@ public class ScoreSystem {
     public static void fixScoreList(Guild g) throws IOException {
         List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
 
-        for(String line : lines) {
-            if(lines.indexOf(line) != 0) {
+        for (String line : lines) {
+            if (lines.indexOf(line) != 0) {
                 try {
                     g.getMemberById(line.split(":")[0]).getAsMention();
                 } catch (Exception ignored) {
@@ -187,7 +187,7 @@ public class ScoreSystem {
             }
         }
 
-        for(Member m : g.getMembers()) {
+        for (Member m : g.getMembers()) {
             try {
                 addScore(m, 0);
             } catch (IOException e) {
@@ -200,7 +200,7 @@ public class ScoreSystem {
         //Remove someone's ID from the score list, so if they leave the server and then join back they have 0 points
         List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
         lines.remove(getUserLine(uid));
-       IO.writeSmallTextFile(lines, Vars.scoreFile);
+        IO.writeSmallTextFile(lines, Vars.scoreFile);
     }
 
     private static int getUserLine(String uid) {
@@ -209,9 +209,9 @@ public class ScoreSystem {
             List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
 
             //Loop through all the lines and see if it matches the given UID
-            for(int i = 0; i < lines.size(); i++) {
+            for (int i = 0; i < lines.size(); i++) {
                 String user = lines.get(i).split(":")[0];
-                if(user.equalsIgnoreCase(uid)) {
+                if (user.equalsIgnoreCase(uid)) {
                     return i;
                 }
             }
@@ -228,7 +228,7 @@ public class ScoreSystem {
 
     public static void addScore(Member m, int score) throws IOException {
         //Check if member is a bot, if so, don't update score
-        if(m.getUser().isBot())
+        if (m.getUser().isBot())
             return;
 
         //Read the file with all the user scores
@@ -236,7 +236,7 @@ public class ScoreSystem {
         List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
 
         //Update score, if user isn't in the file yet, create the line
-        if(userLine == -1) {
+        if (userLine == -1) {
             lines.add(m.getId() + ":" + score);
         } else {
             String oldLine = lines.get(userLine);
@@ -254,7 +254,7 @@ public class ScoreSystem {
         List<UserScore> userScores = new ArrayList<>();
 
         //Put all the users and their scores in an UserScore array
-        for(String line : lines) {
+        for (String line : lines) {
             String[] splitLine = line.split(":");
             String uid = splitLine[0];
             int score = Integer.parseInt(splitLine[1]);
@@ -272,7 +272,8 @@ public class ScoreSystem {
         try {
             scoreBelow = userScores.get(rank + 1);
             scoreAbove = userScores.get(rank - 1);
-        } catch (Exception _ignored) { }
+        } catch (Exception _ignored) {
+        }
 
         //Get the person who requested his score his UserScore
         UserScore requester = getUserScoreFromId(userScores, m.getId());
@@ -286,14 +287,14 @@ public class ScoreSystem {
                 rank + 1,
                 requester.getScore() > 500,
                 requester.getScore() > 2000,
-                (double)requester.getScore() / 500 * 100,
-                (double)requester.getScore() / 2000 * 100
+                (double) requester.getScore() / 500 * 100,
+                (double) requester.getScore() / 2000 * 100
         );
     }
 
     private static UserScore getUserScoreFromId(List<UserScore> array, String id) {
-        for(UserScore score : array)
-            if(score.getId().equals(id))
+        for (UserScore score : array)
+            if (score.getId().equals(id))
                 return score;
 
         return new UserScore("Not Found", -1);
@@ -303,7 +304,7 @@ public class ScoreSystem {
         UserScore temp;
         for (int i = 1; i < array.length; i++) {
             for (int j = i; j > 0; j--) {
-                if (array[j].getScore() < array [j - 1].getScore()) {
+                if (array[j].getScore() < array[j - 1].getScore()) {
                     temp = array[j];
                     array[j] = array[j - 1];
                     array[j - 1] = temp;
@@ -315,10 +316,10 @@ public class ScoreSystem {
     }
 
     private static UserScore[] reverseUserScoreArray(UserScore[] array) {
-        for(int i=0; i<array.length/2; i++){
+        for (int i = 0; i < array.length / 2; i++) {
             UserScore temp = array[i];
-            array[i] = array[array.length -i -1];
-            array[array.length -i -1] = temp;
+            array[i] = array[array.length - i - 1];
+            array[array.length - i - 1] = temp;
         }
 
         return array;
@@ -329,7 +330,7 @@ public class ScoreSystem {
         int userLine = getUserLine(m.getId());
         List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
 
-        if(userLine == -1)
+        if (userLine == -1)
             return 0;
 
         return Integer.parseInt(lines.get(userLine).split(":")[1]);

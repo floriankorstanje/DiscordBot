@@ -48,7 +48,7 @@ public class Rank {
     }
 
     public int getTopPercentage() {
-        return (int) Math.round((double)position / (double)totalMembers * 100);
+        return (int) Math.round((double) position / (double) totalMembers * 100);
     }
 
     public int getHigherPeepsProgress() {

@@ -1,6 +1,6 @@
 package com.florn.Commands;
 
-import com.florn.Log;
+import com.florn.Output;
 import com.florn.ScoreSystem.Rank;
 import com.florn.ScoreSystem.ScoreSystem;
 import com.florn.Util;
@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.IEventManager;
 
 import java.io.IOException;
 import java.util.*;
@@ -53,14 +52,14 @@ public class Commands {
                 m = e.getGuild().getMemberById(args[0]);
             } catch (Exception ex) {
                 //Tell user that the uid is unknown
-                Log.unknownUid(e.getChannel(), args[0]);
+                Output.unknownUid(e.getChannel(), args[0]);
                 return false;
             }
-        } else if(args.length == 0) {
+        } else if (args.length == 0) {
             m = e.getMember();
-        } else  {
+        } else {
             //Tell user command is wrong
-            Log.unknownArguments(e.getChannel(), "score", "score [uid]");
+            Output.unknownArguments(e.getChannel(), "score", "score [uid]");
             return false;
         }
 
@@ -102,14 +101,14 @@ public class Commands {
 
     public static boolean modScore(GuildMessageReceivedEvent e, String[] args) {
         //Check if the user has permissions to execute this command
-        if(!e.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
-            Log.noPermission(e.getChannel(), "modscore");
+        if (!e.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+            Output.noPermission(e.getChannel(), "modscore");
             return false;
         }
 
         //Check if the arguments are correct
-        if(args.length != 3) {
-            Log.unknownArguments(e.getChannel(), "modscore", "modscore <uid> <add|remove|set> <score>");
+        if (args.length != 3) {
+            Output.unknownArguments(e.getChannel(), "modscore", "modscore <uid> <add|remove|set> <score>");
             return false;
         }
 
@@ -121,13 +120,13 @@ public class Commands {
             toModify = e.getGuild().getMemberById(args[0]);
         } catch (Exception _ignored) {
             //Tell the user the given uid is unknown
-            Log.unknownUid(e.getChannel(), args[0]);
+            Output.unknownUid(e.getChannel(), args[0]);
             return false;
         }
 
         //Check if the 2nd arguments is a valid operator
-        if(!args[1].equals("add") && !args[1].equals("remove") && !args[1].equals("set")) {
-            Log.unknownArguments(e.getChannel(), "modscore", "modscore <uid> <add|remove|set> <score>");
+        if (!args[1].equals("add") && !args[1].equals("remove") && !args[1].equals("set")) {
+            Output.unknownArguments(e.getChannel(), "modscore", "modscore <uid> <add|remove|set> <score>");
             return false;
         }
 
@@ -135,12 +134,12 @@ public class Commands {
         try {
             Integer.parseInt(args[2]);
         } catch (Exception _ignored) {
-            Log.unknownArguments(e.getChannel(), "modscore", "modscore <uid> <add|remove|set> <score>");
+            Output.unknownArguments(e.getChannel(), "modscore", "modscore <uid> <add|remove|set> <score>");
             return false;
         }
 
         //Execute the actual command requested
-        if(args[1].equals("add")) {
+        if (args[1].equals("add")) {
             //Add score to the user
             try {
                 ScoreSystem.addScore(toModify, Integer.parseInt(args[2]));
@@ -154,11 +153,11 @@ public class Commands {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        } else if(args[1].equals("remove")) {
+        } else if (args[1].equals("remove")) {
             //Remove the points
             try {
                 //If the user's points will go below 26, cancel
-                if(ScoreSystem.getPoints(toModify) - Integer.parseInt(args[2]) < 26) {
+                if (ScoreSystem.getPoints(toModify) - Integer.parseInt(args[2]) < 26) {
                     e.getChannel().sendMessage("Unable to remove " + args[2] + " points from " + toModify.getEffectiveName() + ". Lowest score value is " + (Integer.parseInt(args[2]) - (26 - (ScoreSystem.getPoints(toModify) - Integer.parseInt(args[2]))))).queue();
                     return false;
                 }
@@ -177,9 +176,9 @@ public class Commands {
                 ex.printStackTrace();
                 return false;
             }
-        } else if(args[1].equals("set")) {
+        } else if (args[1].equals("set")) {
             //If the user's points will go below 26, cancel
-            if(Integer.parseInt(args[2]) < 26) {
+            if (Integer.parseInt(args[2]) < 26) {
                 e.getChannel().sendMessage("Can't set users score lower than 26.").queue();
                 return false;
             }
@@ -211,7 +210,7 @@ public class Commands {
         int timeout = 500;
 
         //Ping the server and tell the user if the host was reachable
-        if(Util.pingHost(serverIP, serverPort, timeout)) {
+        if (Util.pingHost(serverIP, serverPort, timeout)) {
             e.getChannel().sendMessage("Minecraft server is on!").queue();
         } else {
             e.getChannel().sendMessage("Minecraft server is off.").queue();
