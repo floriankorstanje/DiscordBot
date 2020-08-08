@@ -78,7 +78,7 @@ public class Main {
         System.out.println("Token: " + token);
 
         //Initialize the client with the bot token
-        jda = JDABuilder.createDefault(token).build();
+        jda = new JDABuilder().setToken(token).build();
 
         //Set bot status to "Listening to $help | v1.0.0"
         jda.getPresence().setActivity(Activity.listening(Vars.botPrefix + "help | v" + Vars.version));

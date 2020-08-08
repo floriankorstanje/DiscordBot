@@ -272,7 +272,7 @@ public class ScoreSystem {
         try {
             scoreBelow = userScores.get(rank + 1);
             scoreAbove = userScores.get(rank - 1);
-        } catch (Exception _ignored) {
+        } catch (Exception ignored) {
         }
 
         //Get the person who requested his score his UserScore
