@@ -53,6 +53,12 @@ public class CommandHandler extends ListenerAdapter {
             } else if (cmd.equalsIgnoreCase("mcserver")) {
                 //Command $mcserver
                 success = Commands.minecraftServer(event);
+            } else if (cmd.equalsIgnoreCase("say")) {
+                //Command $say
+                success = Commands.say(event, args);
+            } else if (cmd.equalsIgnoreCase("version")) {
+                //Command $version
+                success = Commands.version(event);
             } else {
                 //If the command is unrecognized, set recognized and success to false
                 recognized = false;

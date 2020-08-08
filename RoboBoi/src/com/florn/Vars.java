@@ -12,7 +12,7 @@ public class Vars {
     public static String botPrefix = "$";
     public static Guild guild = null;
     public static Random r = new Random();
-    public static String version = "1.4.5";
+    public static String version = "1.5.3";
 
     //Channel IDs
     public static String systemMessagesChannel = "630799468043829248";

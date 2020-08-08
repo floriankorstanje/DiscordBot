@@ -11,16 +11,19 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.*;
 
 public class Commands {
     public static boolean help(GuildMessageReceivedEvent e) {
         //ArrayList to easily add new lines in the help message
         ArrayList<String> help = new ArrayList<>();
-        help.add("**Help for " + e.getJDA().getSelfUser().getName() + "**");
-        help.add("help - Shows this.");
-        help.add("score [uid] - Without arguments, this will show your score. Argument UID will show someone else's score.");
+        help.add("**Help for " + e.getJDA().getSelfUser().getName() + " version " + Vars.version + "**");
         help.add("modscore <uid> <add|remove|set> <score> - ADMIN ONLY - Modifies a user's score.");
+        help.add("say <message> - ADMIN ONLY - Sends a message as the bot");
+        help.add("help - Shows this.");
+        help.add("version - Shows the bot version.");
+        help.add("score [uid] - Without arguments, this will show your score. Argument UID will show someone else's score.");
         help.add("mcserver - Checks if the minecraft server is on.");
 
         //Add all the item in the ArrayList to one string to send it to the user
@@ -216,6 +219,39 @@ public class Commands {
             e.getChannel().sendMessage("Minecraft server is off.").queue();
         }
 
+        return true;
+    }
+
+    public static boolean say(GuildMessageReceivedEvent e, String[] args) {
+        //Check if there are arguments
+        if(args.length == 0) {
+            Output.unknownArguments(e.getChannel(), "say", "say <message>");
+            return false;
+        }
+
+        //Check if the user has permissions to do this
+        if(!e.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+            Output.noPermission(e.getChannel(), "say");
+            return false;
+        }
+
+        //Add all the arguments together to make one string
+        StringBuilder b = new StringBuilder();
+
+        for(String arg : args) {
+            b.append(arg + " ");
+        }
+
+        //Send the message
+        String message = b.toString().trim();
+        e.getChannel().sendMessage(message).queue();
+
+        return true;
+    }
+
+    public static boolean version(GuildMessageReceivedEvent e) {
+        //Send the bot version
+        e.getChannel().sendMessage("Current Bot Version: " + Vars.version).queue();
         return true;
     }
 }
