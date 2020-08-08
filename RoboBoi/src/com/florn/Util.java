@@ -90,7 +90,7 @@ public class Util {
     }
 
     public static int random(int min, int max) {
-        return Vars.r.nextInt(max - min) + min;
+        return Vars.random.nextInt(max - min) + min;
     }
 
     public static boolean pingHost(String host, int port, int timeout) {
@@ -107,7 +107,7 @@ public class Util {
     public static String generateCode(int length) {
         //Generate a random code for bot authentication
         byte[] arr = new byte[length];
-        Vars.r.nextBytes(arr);
+        Vars.random.nextBytes(arr);
         String generated = new String(arr, StandardCharsets.US_ASCII);
 
         return String.format("%040x", new BigInteger(1, generated.getBytes()));

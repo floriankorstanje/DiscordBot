@@ -11,8 +11,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.io.IOException;
-import java.math.BigInteger;
-import java.util.*;
+import java.util.ArrayList;
 
 public class Commands {
     public static boolean help(GuildMessageReceivedEvent e) {
@@ -68,7 +67,10 @@ public class Commands {
 
         //Get the user's name and figure out if it has to end in s or 's
         String userName = m.getEffectiveName() + (m.getEffectiveName().toCharArray()[m.getEffectiveName().length() - 1] == 's' ? "'" : "'s");
+
+        //Set some things in the embed
         b.setTitle(userName + " Score");
+        b.setFooter(Vars.guild.getJDA().getSelfUser().getName() + " made by florn");
 
         //Set a random color for the embed
         b.setColor(Util.random(0x0, 0xFFFFFF));
@@ -224,13 +226,13 @@ public class Commands {
 
     public static boolean say(GuildMessageReceivedEvent e, String[] args) {
         //Check if there are arguments
-        if(args.length == 0) {
+        if (args.length == 0) {
             Output.unknownArguments(e.getChannel(), "say", "say <message>");
             return false;
         }
 
         //Check if the user has permissions to do this
-        if(!e.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+        if (!e.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
             Output.noPermission(e.getChannel(), "say");
             return false;
         }
@@ -238,7 +240,7 @@ public class Commands {
         //Add all the arguments together to make one string
         StringBuilder b = new StringBuilder();
 
-        for(String arg : args) {
+        for (String arg : args) {
             b.append(arg + " ");
         }
 
@@ -250,8 +252,23 @@ public class Commands {
     }
 
     public static boolean version(GuildMessageReceivedEvent e) {
-        //Send the bot version
-        e.getChannel().sendMessage("Current Bot Version: " + Vars.version).queue();
+        //Get versions
+        String botVersion = Vars.version;
+        String javaVersion = System.getProperty("java.version");
+
+        //Make an embed and make it look nice
+        EmbedBuilder b = new EmbedBuilder();
+        b.setColor(Util.random(0x0, 0xFFFFFF));
+        b.setTitle(e.getJDA().getSelfUser().getName() + " Version");
+        b.setFooter(Vars.guild.getJDA().getSelfUser().getName() + " made by florn");
+
+        //Add the versions to the embed
+        b.addField("Bot Version", "v" + botVersion, false);
+        b.addField("Java Version", javaVersion, false);
+
+        //Send the embed
+        e.getChannel().sendMessage(b.build()).queue();
+
         return true;
     }
 }

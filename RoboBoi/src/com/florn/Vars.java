@@ -11,8 +11,8 @@ public class Vars {
     public static String authFile = System.getProperty("user.dir") + "/auth.txt";
     public static String botPrefix = "$";
     public static Guild guild = null;
-    public static Random r = new Random();
-    public static String version = "1.5.3";
+    public static Random random = new Random();
+    public static String version = "1.5.5";
 
     //Channel IDs
     public static String systemMessagesChannel = "630799468043829248";

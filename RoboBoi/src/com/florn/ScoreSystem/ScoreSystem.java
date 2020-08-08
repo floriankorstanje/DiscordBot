@@ -20,7 +20,7 @@ public class ScoreSystem {
 
     //A thread that loops and gives users a random score if they sent a message in that time period
     public static void messageScoreThread() {
-        Random r = Vars.r;
+        Random r = Vars.random;
 
         new Thread(() -> {
             //Loop while the thread isn't interrupted

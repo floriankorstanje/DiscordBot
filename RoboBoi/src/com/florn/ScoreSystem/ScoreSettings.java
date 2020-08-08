@@ -14,20 +14,20 @@ public class ScoreSettings {
         return rppm;
     }
 
-    public int getRandomPointsPerMessageDelay() {
-        return rppmd;
-    }
-
-    public int getCallPointsDelay() {
-        return cpd;
-    }
-
     public void setRandomPointsPerMessage(Range range) {
         rppm = range;
     }
 
+    public int getRandomPointsPerMessageDelay() {
+        return rppmd;
+    }
+
     public void setRandomPointsPerMessageDelay(int randomPointsPerMessageDelay) {
         rppmd = randomPointsPerMessageDelay;
+    }
+
+    public int getCallPointsDelay() {
+        return cpd;
     }
 
     public void setCallPointsDelay(int callPointsDelay) {

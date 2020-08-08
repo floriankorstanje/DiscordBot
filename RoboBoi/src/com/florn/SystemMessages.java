@@ -15,6 +15,11 @@ import javax.annotation.Nonnull;
 import java.io.IOException;
 
 public class SystemMessages extends ListenerAdapter {
+    public static void announceUserNewRole(Member m, Role r, Guild g) {
+        //Announce user new role
+        g.getTextChannelById(Vars.systemMessagesChannel).sendMessage("**" + m.getAsMention() + " has just earned the " + r.getName() + " role!**").queue();
+    }
+
     @Override
     public void onGuildMemberJoin(@Nonnull GuildMemberJoinEvent event) {
         Role role = event.getGuild().getRoleById(Vars.newPeepsRole);
@@ -61,10 +66,5 @@ public class SystemMessages extends ListenerAdapter {
     public void onGuildMemberUpdateBoostTime(@Nonnull GuildMemberUpdateBoostTimeEvent event) {
         //Announce user boost
         event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage("__***THE SERVER HAS BEEN BOOSTED BY " + event.getUser().getAsMention() + ". THANKS!***__").queue();
-    }
-
-    public static void announceUserNewRole(Member m, Role r, Guild g) {
-        //Announce user new role
-        g.getTextChannelById(Vars.systemMessagesChannel).sendMessage("**" + m.getAsMention() + " has just earned the " + r.getName() + " role!**").queue();
     }
 }

@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/RoboBoi_jar</output-path>
     <root id="archive" name="RoboBoi.jar">
       <element id="module-output" name="RoboBoi" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/JDA-4.1.0_84-withDependencies.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/JDA-4.2.0_168-withDependencies.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

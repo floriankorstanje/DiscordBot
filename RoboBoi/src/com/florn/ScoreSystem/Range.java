@@ -12,12 +12,12 @@ public class Range {
         return min;
     }
 
-    public int getMax() {
-        return max;
-    }
-
     public void setMin(int _min) {
         min = _min;
+    }
+
+    public int getMax() {
+        return max;
     }
 
     public void setMax(int _max) {

@@ -3,7 +3,6 @@ package com.florn;
 import com.florn.Commands.CommandHandler;
 import com.florn.ScoreSystem.AddScoreEvents;
 import com.florn.ScoreSystem.ScoreSystem;
-import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -79,10 +78,10 @@ public class Main {
         System.out.println("Token: " + token);
 
         //Initialize the client with the bot token
-        jda = new JDABuilder(AccountType.BOT).setToken(token).build();
+        jda = JDABuilder.createDefault(token).build();
 
-        //Set bot status to "Listening to $help"
-        jda.getPresence().setActivity(Activity.listening(Vars.botPrefix + "help"));
+        //Set bot status to "Listening to $help | v1.0.0"
+        jda.getPresence().setActivity(Activity.listening(Vars.botPrefix + "help | v" + Vars.version));
 
         //Make sure all the events get handled
         jda.addEventListener(new SystemMessages());
