@@ -23,7 +23,7 @@ public class Output {
         b.addField("Executor", executor.getAsMention(), true);
         b.addField("Recognized", recognized ? "Yes" : "No", true);
         b.addField("Succeeded", success ? "Yes" : "No", true);
-        b.addField("Channel", "#" + executionChannel.getName(), true);
+        b.addField("Channel", "#" + executionChannel.getAsMention(), true);
 
         //Send the embed to the text channel
         channel.sendMessage(b.build()).queue();

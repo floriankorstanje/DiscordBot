@@ -34,7 +34,7 @@ public class SystemMessages extends ListenerAdapter {
         }
 
         //Announce user join
-        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage("**Welcome " + event.getUser().getName() + " to " + event.getGuild().getName() + "!**").queue();
+        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage("**Welcome " + event.getUser().getName() + " to " + event.getGuild().getName() + "! To see all the channels, go to " + Vars.guild.getTextChannelById(Vars.rulesChannel).getAsMention() + " and accept the rules.**").queue();
     }
 
     @Override

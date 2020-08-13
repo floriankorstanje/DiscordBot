@@ -6,7 +6,6 @@ import com.florn.ScoreSystem.ScoreSystem;
 import com.florn.Util;
 import com.florn.Vars;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
@@ -106,7 +105,7 @@ public class Commands {
 
     public static boolean modScore(GuildMessageReceivedEvent e, String[] args) {
         //Check if the user has permissions to execute this command
-        if (!e.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+        if (!e.getMember().hasPermission(Vars.adminCommandPermission)) {
             Output.noPermission(e.getChannel(), "modscore");
             return false;
         }
@@ -232,7 +231,7 @@ public class Commands {
         }
 
         //Check if the user has permissions to do this
-        if (!e.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+        if (!e.getMember().hasPermission(Vars.adminCommandPermission)) {
             Output.noPermission(e.getChannel(), "say");
             return false;
         }
