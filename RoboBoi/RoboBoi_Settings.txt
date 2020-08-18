@@ -1,3 +1,4 @@
-randompointsmessage:1,5
-randompointsmessagedelay:60000
-callpointsdelay:300000
+random_points_per_message:1,5
+give_message_points_delay:60000
+give_call_points_delay:300000
+chance_reaction_does_not_give_points:0.8

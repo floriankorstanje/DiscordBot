@@ -60,7 +60,7 @@ public class Util {
 
     public static ScoreSettings getScoreSettings() {
         //Set default settings in case the file can't be read
-        ScoreSettings toReturn = new ScoreSettings(new Range(1, 5), 60000, 300000);
+        ScoreSettings toReturn = new ScoreSettings(new Range(1, 5), 60000, 300000, .8);
 
         try {
             //Put the entire file in a string array
@@ -82,6 +82,9 @@ public class Util {
 
             int callPointsDelay = Integer.parseInt(vars[2]);
             toReturn.setCallPointsDelay(callPointsDelay);
+
+            double reactionDoesntGivePointsChance = Double.parseDouble(vars[3]);
+            toReturn.setReactionDoesntGivePointsChance(reactionDoesntGivePointsChance);
         } catch (IOException e) {
             e.printStackTrace();
         }

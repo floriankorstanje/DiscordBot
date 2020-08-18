@@ -2,11 +2,11 @@ package com.florn.ScoreSystem;
 
 //Just an easy class to transfer some user data about their rank
 public class Rank {
+    private final UserScore above;
+    private final UserScore below;
     int totalMembers, position, topPercentage, score;
     boolean higherPeeps, superPeeps;
     double higherPeepsProgress, superPeepsProgress;
-    private final UserScore above;
-    private final UserScore below;
 
     public Rank(int _score, UserScore _above, UserScore _below, int _totalMembers, int _position, boolean _higherPeeps, boolean _superPeeps, double _higherPeepsProgress, double _superPeepsProgress) {
         above = _above;

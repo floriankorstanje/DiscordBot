@@ -42,9 +42,10 @@ public class Main {
             Files.createFile(Paths.get(Vars.settingsFile));
 
             ArrayList<String> lines = new ArrayList<>();
-            lines.add("randompointsmessage:1,5");
-            lines.add("randompointsmessagedelay:60000");
-            lines.add("callpointsdelay:300000");
+            lines.add("random_points_per_message:1,5");
+            lines.add("give_message_points_delay:60000");
+            lines.add("give_call_points_delay:300000");
+            lines.add("chance_reaction_does_not_give_points:0.8");
 
             IO.writeSmallTextFile(lines, Vars.settingsFile);
         }
