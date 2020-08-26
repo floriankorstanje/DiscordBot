@@ -13,7 +13,7 @@ public class Vars {
     public static String botPrefix = "$";
     public static Guild guild = null;
     public static Random random = new Random();
-    public static String version = "1.5.8_3";
+    public static String version = "1.5.9_1";
     public static Permission adminCommandPermission = Permission.MESSAGE_MANAGE;
 
     //Channel IDs
