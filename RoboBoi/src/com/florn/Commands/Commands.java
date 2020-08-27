@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ public class Commands {
         help.add("say <message> - ADMIN ONLY - Sends a message as the bot");
         help.add("help - Shows this.");
         help.add("version - Shows the bot version.");
-        help.add("score [uid] - Without arguments, this will show your score. Argument UID will show someone else's score.");
+        help.add("score [uid|*] - Without arguments, this will show your score. Argument UID will show someone else's score. * will send you the score file.");
         help.add("mcserver - Checks if the minecraft server is on.");
 
         //Add all the item in the ArrayList to one string to send it to the user
@@ -48,6 +49,11 @@ public class Commands {
 
         //Check if the command got arguments
         if (args.length == 1) {
+            if(args[0].equals("*")) {
+                e.getChannel().sendFile(new File(Vars.scoreFile)).queue();
+                return true;
+            }
+
             //Check if args[0] contains uid
             try {
                 m = e.getGuild().getMemberById(args[0]);
