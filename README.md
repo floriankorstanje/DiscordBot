@@ -1,5 +1,5 @@
 # RoboBoi
-The directory "RoboBoi" is the version of the bot I will be updating and working on. "DiscordBot" is an old version of the bot
+The directory "RoboBoi" is the folder with all the source code and other things that Intellij Idea created.
 
 Bot needs JDA to work but this is included in the files
 
