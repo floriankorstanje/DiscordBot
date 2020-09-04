@@ -89,10 +89,9 @@ public class Commands {
         b.addField("Higher Peeps Progress", rank.getScore() + "/500\n" + rank.getHigherPeepsProgress() + "% progress", false);
         b.addField("Super Peeps Progress", rank.getScore() + "/2000\n" + rank.getSuperPeepsProgress() + "% progress", false);
 
-        b.addField("Overall Progress", m.getEffectiveName() + " " +
-                (rank.getUserAchievedHigherPeeps() ? "achieved Higher Peeps!" : "hasn't achieved Higher Peeps yet.") +
-                "\n" +
-                (rank.getUserAchievedSuperPeeps() ? "achieved Super Peeps!" : "hasn't achieved Super Peeps yet."), false);
+        b.addField("Overall Progress",
+                m.getEffectiveName() + " " + (rank.getUserAchievedHigherPeeps() ? "achieved Higher Peeps!" : "hasn't achieved Higher Peeps yet.") +
+                "\n" + m.getEffectiveName() + " " + (rank.getUserAchievedSuperPeeps() ? "achieved Super Peeps!" : "hasn't achieved Super Peeps yet."), false);
 
         b.addField("Rank", rank.getPosition() + " out of " + rank.getTotalMembers() + "\nTop " + rank.getTopPercentage() + "%", false);
 
