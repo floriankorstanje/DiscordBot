@@ -96,9 +96,9 @@ public class ScoreSystem {
         List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
 
         //Put all the roles in an easy Role object
-        Role normalPeeps = g.getRoleById(Vars.normalPeepsRole);
-        Role higherPeeps = g.getRoleById(Vars.higherPeepsRole);
-        Role superPeeps = g.getRoleById(Vars.superPeepsRole);
+        Role normalPeeps = g.getRoleById(Vars.normalPeopleRole);
+        Role higherPeeps = g.getRoleById(Vars.higherPeopleRole);
+        Role superPeeps = g.getRoleById(Vars.superPeopleRole);
 
         //If the user does not have line in the score file yet, create one
         if (userLine == -1) {

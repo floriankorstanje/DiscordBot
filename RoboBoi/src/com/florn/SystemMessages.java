@@ -22,7 +22,7 @@ public class SystemMessages extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(@Nonnull GuildMemberJoinEvent event) {
-        Role role = event.getGuild().getRoleById(Vars.newPeepsRole);
+        Role role = event.getGuild().getRoleById(Vars.newPeopleRole);
 
         event.getGuild().addRoleToMember(event.getMember(), role).complete();
 
@@ -34,7 +34,7 @@ public class SystemMessages extends ListenerAdapter {
         }
 
         //Announce user join
-        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage("**Welcome " + event.getUser().getName() + " to " + event.getGuild().getName() + "! To see all the channels, go to " + Vars.guild.getTextChannelById(Vars.rulesChannel).getAsMention() + " and accept the rules.**").queue();
+        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage("**Welcome " + event.getUser().getAsMention() + " to " + event.getGuild().getName() + "! To see all the channels, go to " + Vars.guild.getTextChannelById(Vars.rulesChannel).getAsMention() + " and accept the rules.**").queue();
     }
 
     @Override
@@ -65,6 +65,6 @@ public class SystemMessages extends ListenerAdapter {
     @Override
     public void onGuildMemberUpdateBoostTime(@Nonnull GuildMemberUpdateBoostTimeEvent event) {
         //Announce user boost
-        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage("__***THE SERVER HAS BEEN BOOSTED BY " + event.getUser().getAsMention() + ". THANKS!***__").queue();
+        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage("__***THE SERVER HAS BEEN BOOSTED BY " + event.getUser().getAsMention() + "! THANKS!***__").queue();
     }
 }
