@@ -50,9 +50,6 @@ public class CommandHandler extends ListenerAdapter {
             } else if (cmd.equalsIgnoreCase("modscore")) {
                 //Command $modscore
                 success = Commands.modScore(event, args);
-            } else if (cmd.equalsIgnoreCase("mcserver")) {
-                //Command $mcserver
-                success = Commands.minecraftServer(event);
             } else if (cmd.equalsIgnoreCase("say")) {
                 //Command $say
                 success = Commands.say(event, args);

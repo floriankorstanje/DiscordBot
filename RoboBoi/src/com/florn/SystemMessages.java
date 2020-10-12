@@ -40,8 +40,8 @@ public class SystemMessages extends ListenerAdapter {
     @Override
     public void onGuildMemberLeave(@Nonnull GuildMemberLeaveEvent event) {
         try {
-            //Remove the left user's ID from the score file
-            ScoreSystem.removeUserId(event.getMember().getId());
+            //Reset users score when they leave
+            ScoreSystem.resetUserScore(event.getMember().getId());
         } catch (IOException e) {
             e.printStackTrace();
         }

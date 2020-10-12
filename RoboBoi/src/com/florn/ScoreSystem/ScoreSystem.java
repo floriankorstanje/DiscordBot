@@ -203,6 +203,13 @@ public class ScoreSystem {
         IO.writeSmallTextFile(lines, Vars.scoreFile);
     }
 
+    public static void resetUserScore(String uid) throws IOException {
+        //Set the users score back to 25
+        List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
+        lines.set(getUserLine(uid), uid + ":" + 25);
+        IO.writeSmallTextFile(lines, Vars.scoreFile);
+    }
+
     private static int getUserLine(String uid) {
         try {
             //Get all the lines in the file

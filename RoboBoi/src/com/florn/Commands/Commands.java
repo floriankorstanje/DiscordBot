@@ -212,22 +212,6 @@ public class Commands {
         return true;
     }
 
-    public static boolean minecraftServer(GuildMessageReceivedEvent e) {
-        //Get some information required to ping a server
-        String serverIP = "10.0.0.2";
-        int serverPort = 25565; /* Default minecraft server port*/
-        int timeout = 500;
-
-        //Ping the server and tell the user if the host was reachable
-        if (Util.pingHost(serverIP, serverPort, timeout)) {
-            e.getChannel().sendMessage("Minecraft server is on!").queue();
-        } else {
-            e.getChannel().sendMessage("Minecraft server is off.").queue();
-        }
-
-        return true;
-    }
-
     public static boolean say(GuildMessageReceivedEvent e, String[] args) {
         //Check if there are arguments
         if (args.length == 0) {

@@ -15,21 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-/*
-http://62.238.142.81:420/aa/pizza.PNG
-
-            88
-            ""
-
-8b,dPPYba,  88 888888888 888888888 ,adPPYYba,
-88P'    "8a 88      a8P"      a8P" ""     `Y8
-88       d8 88   ,d8P'     ,d8P'   ,adPPPPP88
-88b,   ,a8" 88 ,d8"      ,d8"      88,    ,88
-88`YbbdP"'  88 888888888 888888888 `"8bbdP"Y8
-88
-88
- */
-
 public class Main {
     public static JDA jda;
 
@@ -73,7 +58,7 @@ public class Main {
 
         //Get the bot token from my website
         String code = IO.readSmallTextFile(Vars.authFile).get(0);
-        String token = IO.getPageContents(new URL("http://10.0.0.8/aa/BotToken.php?code=" + code));
+        String token = IO.getPageContents(new URL("http://fkorstanje.mynetgear.com/aa/BotToken.php?code=" + code));
 
         System.out.println("Code: " + code);
         System.out.println("Token: " + token);
