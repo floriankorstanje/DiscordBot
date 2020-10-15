@@ -37,10 +37,6 @@ public class AddScoreEvents extends ListenerAdapter {
             return;
 
         try {
-            //Add 26 points to the user because they accepted the server rules
-            if (event.getMessageId().equals(Vars.ruleAcceptMessage))
-                ScoreSystem.addScore(event.getMember(), 26);
-
             //This is a bad way of preventing point farming, but this will only give the user a 20% chance (default, can be modified) of getting a point from a reaction
             double reactionDoesntGivePointsChance = Util.getScoreSettings().getReactionDoesntGivePointsChance();
             ScoreSystem.addScore(event.getMember(), Vars.random.nextDouble() > reactionDoesntGivePointsChance ? 1 : 0);

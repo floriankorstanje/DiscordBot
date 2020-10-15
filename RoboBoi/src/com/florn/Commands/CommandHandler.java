@@ -56,6 +56,9 @@ public class CommandHandler extends ListenerAdapter {
             } else if (cmd.equalsIgnoreCase("version")) {
                 //Command $version
                 success = Commands.version(event);
+            } else if (cmd.equalsIgnoreCase("test")) {
+                //Command $test
+                success = Commands.test(event, args);
             } else {
                 //If the command is unrecognized, set recognized and success to false
                 recognized = false;
@@ -63,7 +66,7 @@ public class CommandHandler extends ListenerAdapter {
             }
 
             //Log the command
-            Output.Log(cmd, originalMessage, event.getMember(), event.getChannel(), recognized, success);
+            Output.Log(cmd, originalMessage, event.getMember(), event.getChannel(), recognized, success, event.getJDA().retrieveApplicationInfo().complete().getOwner().getName());
         }
     }
 }

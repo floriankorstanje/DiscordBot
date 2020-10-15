@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 public class Output {
-    public static void Log(String command, String fullMessage, Member executor, TextChannel executionChannel, boolean recognized, boolean success) {
+    public static void Log(String command, String fullMessage, Member executor, TextChannel executionChannel, boolean recognized, boolean success, String botOwner) {
         //Get the bot log text channel
         TextChannel channel = Vars.guild.getTextChannelById(Vars.botLogChannel);
 
@@ -15,7 +15,7 @@ public class Output {
         //Set embed information
         b.setTitle(Vars.guild.getJDA().getSelfUser().getName() + " log message");
         b.setColor(Util.random(0x0, 0xFFFFFF));
-        b.setFooter(Vars.guild.getJDA().getSelfUser().getName() + " made by florn");
+        b.setFooter(Vars.guild.getJDA().getSelfUser().getName() + " made by " + botOwner);
 
         //Add actual message to the embed
         b.addField("Command", Vars.botPrefix + command, true);

@@ -13,7 +13,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
     public static JDA jda;
@@ -66,15 +72,43 @@ public class Main {
         //Initialize the client with the bot token
         jda = new JDABuilder().setToken(token).build();
 
-        //Set bot status to "Listening to $help | v1.0.0"
-        jda.getPresence().setActivity(Activity.listening(Vars.botPrefix + "help | v" + Vars.version));
-
         //Make sure all the events get handled
-        jda.addEventListener(new SystemMessages());
+        jda.addEventListener(new GuildSystem());
         jda.addEventListener(new CommandHandler());
         jda.addEventListener(new AddScoreEvents());
 
-        //Start some threads
+        //Start thread for scoring message points
         ScoreSystem.messageScoreThread();
+
+        //Get the current time so the bot can keep track of it's uptime
+        Instant startTime = Instant.now();
+
+        //Cycle between statuses
+        AtomicInteger index = new AtomicInteger();
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+        Runnable task = () -> {
+            //List of custom statuses
+            Activity[] statuses = {Activity.listening(Vars.botPrefix + "help"), Activity.playing("RoboBoi v" + Vars.version), Activity.playing("RoboBoi for " + getRuntime(startTime))};
+
+            //Set the status
+            jda.getPresence().setActivity(statuses[index.get()]);
+            index.getAndIncrement();
+
+            //Make sure the index doesn't get out of bounds of the array
+            if (index.get() == statuses.length)
+                index.set(0);
+        };
+
+        //Start the status loop
+        executor.scheduleWithFixedDelay(task, 0, 10, TimeUnit.SECONDS);
+    }
+
+    //function to get the runtime of the bot (for the status)
+    static String getRuntime(Instant start) {
+        Instant finish = Instant.now();
+        long elapsed = Duration.between(start, finish).toMillis();
+        return String.format("%02d:%02d",
+                TimeUnit.MILLISECONDS.toHours(elapsed),
+                TimeUnit.MILLISECONDS.toMinutes(elapsed) - TimeUnit.MINUTES.toMinutes(TimeUnit.MILLISECONDS.toHours(elapsed)));
     }
 }

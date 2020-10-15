@@ -13,7 +13,7 @@ public class Vars {
     public static String botPrefix = "$";
     public static Guild guild = null;
     public static Random random = new Random();
-    public static String version = "1.5.11_2";
+    public static String version = "1.6.1_10";
     public static Permission adminCommandPermission = Permission.MESSAGE_MANAGE;
 
     //Channel IDs
@@ -26,7 +26,6 @@ public class Vars {
     public static String ruleAcceptMessage = "737601352921776149";
 
     //Role IDs
-    public static String newPeopleRole = "709023364525719554";
     public static String normalPeopleRole = "647149235568902144";
     public static String higherPeopleRole = "647147137548943422";
     public static String superPeopleRole = "697405963543642122";

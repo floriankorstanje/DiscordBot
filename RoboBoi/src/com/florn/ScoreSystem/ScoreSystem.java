@@ -1,7 +1,7 @@
 package com.florn.ScoreSystem;
 
+import com.florn.GuildSystem;
 import com.florn.IO;
-import com.florn.SystemMessages;
 import com.florn.Util;
 import com.florn.Vars;
 import net.dv8tion.jda.api.entities.Guild;
@@ -108,13 +108,7 @@ public class ScoreSystem {
             String oldLine = lines.get(userLine);
             int score = Integer.parseInt(oldLine.split(":")[1]);
 
-            if (score < 25) {
-                //If the user's score is less than 25, it means that they haven't accepted the rules yet.
-
-                g.removeRoleFromMember(m, normalPeeps).complete();
-                g.removeRoleFromMember(m, higherPeeps).complete();
-                g.removeRoleFromMember(m, superPeeps).complete();
-            } else if (score > 25 && score <= 500) {
+            if (score <= 500) {
                 //Remove all the higher roles since the user doesn't have the score for them anymore
                 g.removeRoleFromMember(m, higherPeeps).complete();
                 g.removeRoleFromMember(m, superPeeps).complete();
@@ -125,7 +119,7 @@ public class ScoreSystem {
                     g.addRoleToMember(m, normalPeeps).complete();
 
                     //Announce that the user got a new role
-                    SystemMessages.announceUserNewRole(m, normalPeeps, g);
+                    GuildSystem.announceUserNewRole(m, normalPeeps, g);
                 }
             } else if (score > 500 && score <= 2000) {
                 //Remove super peeps since the user doesn't have the score for it anymore
@@ -138,7 +132,7 @@ public class ScoreSystem {
                     g.addRoleToMember(m, higherPeeps).complete();
 
                     //Announce that the user got a new role
-                    SystemMessages.announceUserNewRole(m, higherPeeps, g);
+                    GuildSystem.announceUserNewRole(m, higherPeeps, g);
                 }
             } else if (score > 2000) {
                 //If the user has more than 2000 points, they get super peeps
@@ -152,7 +146,7 @@ public class ScoreSystem {
                     g.addRoleToMember(m, superPeeps).complete();
 
                     //Announce that the user got a new role
-                    SystemMessages.announceUserNewRole(m, superPeeps, g);
+                    GuildSystem.announceUserNewRole(m, superPeeps, g);
                 }
             }
         }

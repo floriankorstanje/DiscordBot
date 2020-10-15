@@ -7,11 +7,13 @@ import com.florn.Util;
 import com.florn.Vars;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Commands {
     public static boolean help(GuildMessageReceivedEvent e) {
@@ -23,7 +25,6 @@ public class Commands {
         help.add("help - Shows this.");
         help.add("version - Shows the bot version.");
         help.add("score [uid|*] - Without arguments, this will show your score. Argument UID will show someone else's score. * will send you the score file.");
-        help.add("mcserver - Checks if the minecraft server is on.");
 
         //Add all the item in the ArrayList to one string to send it to the user
         StringBuilder b = new StringBuilder();
@@ -49,7 +50,7 @@ public class Commands {
 
         //Check if the command got arguments
         if (args.length == 1) {
-            if(args[0].equals("*")) {
+            if (args[0].equals("*")) {
                 e.getChannel().sendFile(new File(Vars.scoreFile)).queue();
                 return true;
             }
@@ -91,7 +92,7 @@ public class Commands {
 
         b.addField("Overall Progress",
                 m.getEffectiveName() + " " + (rank.getUserAchievedHigherPeeps() ? "achieved Higher Peeps!" : "hasn't achieved Higher Peeps yet.") +
-                "\n" + m.getEffectiveName() + " " + (rank.getUserAchievedSuperPeeps() ? "achieved Super Peeps!" : "hasn't achieved Super Peeps yet."), false);
+                        "\n" + m.getEffectiveName() + " " + (rank.getUserAchievedSuperPeeps() ? "achieved Super Peeps!" : "hasn't achieved Super Peeps yet."), false);
 
         b.addField("Rank", rank.getPosition() + " out of " + rank.getTotalMembers() + "\nTop " + rank.getTopPercentage() + "%", false);
 
@@ -256,6 +257,19 @@ public class Commands {
 
         //Send the embed
         e.getChannel().sendMessage(b.build()).queue();
+
+        return true;
+    }
+
+    public static boolean test(GuildMessageReceivedEvent e, String[] args) {
+        if (!e.getJDA().retrieveApplicationInfo().complete().getOwner().getId().equals(e.getMember().getId())) {
+            Output.noPermission(e.getChannel(), "test");
+            return false;
+        }
+
+        List<User> reaction = e.getGuild().getTextChannelById(Vars.rulesChannel).retrieveMessageById(Vars.ruleAcceptMessage).complete().getReactions().get(0).retrieveUsers().complete();
+        e.getChannel().sendMessage(reaction.toString()).queue();
+
 
         return true;
     }
