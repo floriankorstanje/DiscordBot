@@ -108,7 +108,7 @@ public class Main {
         Instant finish = Instant.now();
         long elapsed = Duration.between(start, finish).toMillis();
         return String.format("%02d:%02d",
-                (int) ((elapsed / (1000*60*60)) % 24),
+                (int) ((elapsed / (1000*60*60))),
                 (int) ((elapsed / (1000 * 60)) % 60));
     }
 }
