@@ -1,15 +1,18 @@
 package com.florn;
 
-import com.florn.ScoreSystem.Range;
-import com.florn.ScoreSystem.ScoreSettings;
+import com.florn.Config.Range;
+import com.florn.Config.BotSettings;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 
+import java.io.File;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.math.BigInteger;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,40 +59,6 @@ public class Util {
                 e.sendMessage("I sent the message. If you didn't receive it, it is probably because you have turned off the \"Allow direct messages from server members\" is your discord settings. To turn this off, go to User Settings -> Privacy & Safety -> Allow direct messages from server members, and turn this on.\nIf it still doesn't work after you've done this, please message <@399594813390848002>").queue();
             }
         });
-    }
-
-    public static ScoreSettings getScoreSettings() {
-        //Set default settings in case the file can't be read
-        ScoreSettings toReturn = new ScoreSettings(new Range(1, 5), 60000, 300000, .8);
-
-        try {
-            //Put the entire file in a string array
-            List<String> fullFile = IO.readSmallTextFile(Vars.settingsFile);
-            String[] vars = Arrays.copyOf(fullFile.toArray(), fullFile.toArray().length, String[].class);
-
-            //Remove variable naming
-            for (int i = 0; i < vars.length; i++) {
-                vars[i] = vars[i].split(":")[1];
-            }
-
-            //Set all the values gotten from the file
-            String[] range = vars[0].split(",");
-            Range r = new Range(Integer.parseInt(range[0]), Integer.parseInt(range[1]));
-            toReturn.setRandomPointsPerMessage(r);
-
-            int randomPointsPerMessageDelay = Integer.parseInt(vars[1]);
-            toReturn.setRandomPointsPerMessageDelay(randomPointsPerMessageDelay);
-
-            int callPointsDelay = Integer.parseInt(vars[2]);
-            toReturn.setCallPointsDelay(callPointsDelay);
-
-            double reactionDoesntGivePointsChance = Double.parseDouble(vars[3]);
-            toReturn.setReactionDoesntGivePointsChance(reactionDoesntGivePointsChance);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return toReturn;
     }
 
     public static int random(int min, int max) {

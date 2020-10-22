@@ -1,10 +1,9 @@
 package com.florn.Commands;
 
-import com.florn.Output;
+import com.florn.*;
+import com.florn.Config.BotSettings;
 import com.florn.ScoreSystem.Rank;
 import com.florn.ScoreSystem.ScoreSystem;
-import com.florn.Util;
-import com.florn.Vars;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
@@ -25,6 +24,7 @@ public class Commands {
         help.add("help - Shows this.");
         help.add("version - Shows the bot version.");
         help.add("score [uid|*] - Without arguments, this will show your score. Argument UID will show someone else's score. * will send you the score file.");
+        help.add("config <set|get|help> [variable_name|*] [value_to_set] - ADMIN ONLY - Modifies the config for this bot.");
 
         //Add all the item in the ArrayList to one string to send it to the user
         StringBuilder b = new StringBuilder();
@@ -249,7 +249,7 @@ public class Commands {
         EmbedBuilder b = new EmbedBuilder();
         b.setColor(Util.random(0x0, 0xFFFFFF));
         b.setTitle(e.getJDA().getSelfUser().getName() + " Version");
-        b.setFooter(Vars.guild.getJDA().getSelfUser().getName() + " made by florn");
+        b.setFooter(Vars.botName + " made by " + Vars.botOwner);
 
         //Add the versions to the embed
         b.addField("Bot Version", "v" + botVersion, false);
@@ -270,6 +270,93 @@ public class Commands {
         List<User> reaction = e.getGuild().getTextChannelById(Vars.rulesChannel).retrieveMessageById(Vars.ruleAcceptMessage).complete().getReactions().get(0).retrieveUsers().complete();
         e.getChannel().sendMessage(reaction.toString()).queue();
 
+
+        return true;
+    }
+
+    public static boolean config(GuildMessageReceivedEvent e, String[] args) {
+        //Check if the user has permissions to do this
+        if (!e.getMember().hasPermission(Vars.adminCommandPermission)) {
+            Output.noPermission(e.getChannel(), "config");
+            return false;
+        }
+
+        //Check if there are enough arguments
+        if(args.length < 1) {
+            Output.unknownArguments(e.getChannel(), "config", "config <set|get|help> [key_name|*] [value_to_set]");
+            return false;
+        }
+
+        //Check the 1st argument and run set, get or help
+        if(args[0].equalsIgnoreCase("help")) {
+            e.getChannel().sendMessage("For config help, please visit: http://fkorstanje.nl/aa/RoboBoi-Help-ConfigCommand.txt").queue();
+
+        } else if(args[0].equalsIgnoreCase("set")) {
+            //Check if there is enough arguments to run "$config set"
+            if(args.length != 3) {
+                Output.unknownArguments(e.getChannel(), "config", "config <set|get|help> [variable_name|*] [value_to_set]");
+                return false;
+            }
+
+            BotSettings.Result result;
+
+            //Try to set the value and save the result in a variable
+            try {
+                 result = BotSettings.setValue(args[1], args[2]);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+                return  false;
+            }
+
+            //Tell the user if the command succeeded or not
+            if(result == BotSettings.Result.SUCCESS) {
+                //Tell the user the command succeeded
+                e.getChannel().sendMessage("Successfully set \"" + args[1] + "\" to \"" + args[2] + "\". Be aware that some changes need a bot restart fot them to work. Please ask the person who runs the bot to restart.").queue();
+            } else if(result == BotSettings.Result.INVALID_VALUE) {
+                //Tell the user the value isn't the correct datatype for that key
+                e.getChannel().sendMessage("\"" + args[2] + "\" is not the correct datatype for \"" + args[1] + "\". Type \"" + Vars.botPrefix + "config help\" for more explanation.").queue();
+                return false;
+            } else if(result == BotSettings.Result.KEY_DOES_NOT_EXIST) {
+                //Tell the user that key doesn't exist
+                e.getChannel().sendMessage("\"" + args[1] + "\" is an invalid key name. Type \"" + Vars.botPrefix + "config help\" for more explanation.").queue();
+                return false;
+            }
+        } else if(args[0].equalsIgnoreCase("get")) {
+            //Check if there is enough arguments to run "$config get"
+            if(args.length != 2) {
+                Output.unknownArguments(e.getChannel(), "config", "config <set|get|help> [variable_name|*] [value_to_set]");
+                return false;
+            }
+
+            //Check if the user wants all the values or just one
+            if(args[1].equalsIgnoreCase("*")) {
+                //Get all the lines in the settings file
+                List<String> lines;
+
+                try {
+                    lines = IO.readSmallTextFile(Vars.settingsFile);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                    return false;
+                }
+
+                //Create an embedbuilder so we can make the message look nice
+                EmbedBuilder builder = new EmbedBuilder();
+                builder.setTitle("Config for " + Vars.botName);
+                builder.setColor(Vars.random.nextInt(0xFFFFFF));
+
+                //Fill in the embed builder
+                for(String line : lines) {
+                    if(line.contains("=")) {
+                        String[] setting = line.split("=");
+                        builder.addField("\"" + setting[0] + "\":", "\"" + setting[1] + "\"", false);
+                    }
+                }
+
+                //Send the embed message to the channel
+                e.getChannel().sendMessage(builder.build()).queue();
+            }
+        }
 
         return true;
     }

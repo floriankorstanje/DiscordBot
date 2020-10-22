@@ -1,5 +1,6 @@
 package com.florn;
 
+import com.florn.Config.BotSettings;
 import com.florn.ScoreSystem.ScoreSystem;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -21,7 +22,13 @@ import java.util.List;
 public class GuildSystem extends ListenerAdapter {
     public static void announceUserNewRole(Member m, Role r, Guild g) {
         //Announce user new role
-        g.getTextChannelById(Vars.systemMessagesChannel).sendMessage("**" + m.getAsMention() + " has just earned the " + r.getName() + " role!**").queue();
+        g.getTextChannelById(Vars.systemMessagesChannel).sendMessage(getMessage(Vars.roleGetMessage,
+                m.getEffectiveName(),
+                m.getAsMention(),
+                g.getName(),
+                "",
+                r.getName()))
+                .queue();
     }
 
     @Override
@@ -43,7 +50,13 @@ public class GuildSystem extends ListenerAdapter {
         }
 
         //Announce user join
-        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage("**Welcome " + event.getUser().getAsMention() + " to " + event.getGuild().getName() + "! To see all the channels, go to " + Vars.guild.getTextChannelById(Vars.rulesChannel).getAsMention() + " and accept the rules.**").queue();
+        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage(getMessage(Vars.joinMessage,
+                event.getMember().getEffectiveName(),
+                event.getMember().getAsMention(),
+                event.getGuild().getName(),
+                "#" + event.getGuild().getGuildChannelById(Vars.rulesChannel).getName(),
+                ""))
+                .queue();
     }
 
     @Override
@@ -56,25 +69,49 @@ public class GuildSystem extends ListenerAdapter {
         }
 
         //Announce user leave
-        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage("**" + event.getUser().getName() + " has left " + event.getGuild().getName() + ".**").queue();
+        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage(getMessage(Vars.leaveMessage,
+                event.getMember().getEffectiveName(),
+                event.getMember().getAsMention(),
+                event.getGuild().getName(),
+                "#" + event.getGuild().getGuildChannelById(Vars.rulesChannel).getName(),
+                ""))
+                .queue();
     }
 
     @Override
     public void onGuildBan(@Nonnull GuildBanEvent event) {
         //Announce user ban
-        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage("**" + event.getUser().getName() + " has been banned.**").queue();
+        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage(getMessage(Vars.banMessage,
+                event.getUser().getName(),
+                event.getUser().getAsMention(),
+                event.getGuild().getName(),
+                "#" + event.getGuild().getGuildChannelById(Vars.rulesChannel).getName(),
+                ""))
+                .queue();
     }
 
     @Override
     public void onGuildUnban(@Nonnull GuildUnbanEvent event) {
         //Announce user unban
-        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage("**" + event.getUser().getName() + " has been unbanned.**").queue();
+        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage(getMessage(Vars.unbanMessage,
+                event.getUser().getName(),
+                event.getUser().getAsMention(),
+                event.getGuild().getName(),
+                "#" + event.getGuild().getGuildChannelById(Vars.rulesChannel).getName(),
+                ""))
+                .queue();
     }
 
     @Override
     public void onGuildMemberUpdateBoostTime(@Nonnull GuildMemberUpdateBoostTimeEvent event) {
         //Announce user boost
-        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage("__***THE SERVER HAS BEEN BOOSTED BY " + event.getUser().getAsMention() + "! THANKS!***__").queue();
+        event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage(getMessage(Vars.boostMessage,
+                event.getMember().getEffectiveName(),
+                event.getMember().getAsMention(),
+                event.getGuild().getName(),
+                "#" + event.getGuild().getGuildChannelById(Vars.rulesChannel).getName(),
+                ""))
+                .queue();
     }
 
     @Override
@@ -93,5 +130,14 @@ public class GuildSystem extends ListenerAdapter {
             Role role = event.getGuild().getRoleById(Vars.normalPeopleRole);
             event.getGuild().removeRoleFromMember(event.getMember().getId(), role).complete();
         }
+    }
+
+    private static String getMessage(String settingValue, String userName, String userMention, String serverName, String rulesChannel, String roleName) {
+        return settingValue
+                .replace("{SERVER_NAME}", serverName)
+                .replace("{USER_MENTION}", userMention)
+                .replace("{RULES_CHANNEL}", rulesChannel)
+                .replace("{ROLE_NAME}", roleName)
+                .replace("{USER_NAME}", userName);
     }
 }

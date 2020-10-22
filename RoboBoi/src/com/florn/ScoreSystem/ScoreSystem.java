@@ -1,5 +1,7 @@
 package com.florn.ScoreSystem;
 
+import com.florn.Config.BotSettings;
+import com.florn.Config.Range;
 import com.florn.GuildSystem;
 import com.florn.IO;
 import com.florn.Util;
@@ -27,13 +29,13 @@ public class ScoreSystem {
             while (!Thread.interrupted()) {
                 try {
                     hasSent.clear();
-                    int delay = Util.getScoreSettings().getRandomPointsPerMessageDelay();
+                    int delay = BotSettings.getValueInt("give_message_points_delay");
                     Thread.sleep(delay);
 
                     //Add score to users that have sent a message
                     if (hasSent != null) {
                         for (Member m : hasSent) {
-                            Range rRange = Util.getScoreSettings().getRandomPointsPerMessage();
+                            Range rRange = BotSettings.getValueRange("random_points_per_message");
                             addScore(m, Util.random(rRange.getMin(), rRange.getMax()));
                             updateUserRole(m, Vars.guild);
                         }
@@ -52,7 +54,7 @@ public class ScoreSystem {
 
             while (!Thread.interrupted()) {
                 try {
-                    Thread.sleep(Util.getScoreSettings().getCallPointsDelay());
+                    Thread.sleep(BotSettings.getValueInt("give_call_points_delay"));
 
                     //If someone joined the AFK channel they will not gain points
                     if (e.getChannelJoined().getId().equals(Vars.afkChannel))
@@ -100,6 +102,10 @@ public class ScoreSystem {
         Role higherPeeps = g.getRoleById(Vars.higherPeopleRole);
         Role superPeeps = g.getRoleById(Vars.superPeopleRole);
 
+        //Get the scores required for the user to get a new role
+        int higherPeopleSocre = BotSettings.getValueInt("higher_people_points");
+        int superPeopleScore = BotSettings.getValueInt("super_people_points");
+
         //If the user does not have line in the score file yet, create one
         if (userLine == -1) {
             lines.add(m.getId() + ":0");
@@ -108,7 +114,7 @@ public class ScoreSystem {
             String oldLine = lines.get(userLine);
             int score = Integer.parseInt(oldLine.split(":")[1]);
 
-            if (score <= 500) {
+            if (score <= higherPeopleSocre) {
                 //Remove all the higher roles since the user doesn't have the score for them anymore
                 g.removeRoleFromMember(m, higherPeeps).complete();
                 g.removeRoleFromMember(m, superPeeps).complete();
@@ -121,7 +127,7 @@ public class ScoreSystem {
                     //Announce that the user got a new role
                     GuildSystem.announceUserNewRole(m, normalPeeps, g);
                 }
-            } else if (score > 500 && score <= 2000) {
+            } else if (score <= superPeopleScore) {
                 //Remove super peeps since the user doesn't have the score for it anymore
                 g.removeRoleFromMember(m, superPeeps).complete();
 
@@ -134,7 +140,7 @@ public class ScoreSystem {
                     //Announce that the user got a new role
                     GuildSystem.announceUserNewRole(m, higherPeeps, g);
                 }
-            } else if (score > 2000) {
+            } else {
                 //If the user has more than 2000 points, they get super peeps
 
                 if (!hasRole(m, superPeeps)) {

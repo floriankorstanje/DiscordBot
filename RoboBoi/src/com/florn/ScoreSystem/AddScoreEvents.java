@@ -1,5 +1,6 @@
 package com.florn.ScoreSystem;
 
+import com.florn.Config.BotSettings;
 import com.florn.Util;
 import com.florn.Vars;
 import net.dv8tion.jda.api.events.guild.member.update.GuildMemberUpdateBoostTimeEvent;
@@ -37,10 +38,6 @@ public class AddScoreEvents extends ListenerAdapter {
             return;
 
         try {
-            //This is a bad way of preventing point farming, but this will only give the user a 20% chance (default, can be modified) of getting a point from a reaction
-            double reactionDoesntGivePointsChance = Util.getScoreSettings().getReactionDoesntGivePointsChance();
-            ScoreSystem.addScore(event.getMember(), Vars.random.nextDouble() > reactionDoesntGivePointsChance ? 1 : 0);
-
             //Update the role
             ScoreSystem.updateUserRole(event.getMember(), event.getGuild());
         } catch (Exception e) {
@@ -55,10 +52,6 @@ public class AddScoreEvents extends ListenerAdapter {
             return;
 
         try {
-            //Remove 25 points from the user because they didn't accept the rules
-            if (event.getMessageId().equals(Vars.ruleAcceptMessage))
-                ScoreSystem.addScore(event.getMember(), -26);
-
             //Update the role
             ScoreSystem.updateUserRole(event.getMember(), event.getGuild());
         } catch (Exception e) {

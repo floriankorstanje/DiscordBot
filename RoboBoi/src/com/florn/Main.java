@@ -1,6 +1,7 @@
 package com.florn;
 
 import com.florn.Commands.CommandHandler;
+import com.florn.Config.BotSettings;
 import com.florn.ScoreSystem.AddScoreEvents;
 import com.florn.ScoreSystem.ScoreSystem;
 import net.dv8tion.jda.api.JDA;
@@ -29,16 +30,9 @@ public class Main {
 
         //Check if settings file exists.
         if (!new File(Vars.settingsFile).exists()) {
-            //Create settings file with default settings if it doesn't exist
-            Files.createFile(Paths.get(Vars.settingsFile));
-
-            ArrayList<String> lines = new ArrayList<>();
-            lines.add("random_points_per_message:1,5");
-            lines.add("give_message_points_delay:60000");
-            lines.add("give_call_points_delay:300000");
-            lines.add("chance_reaction_does_not_give_points:0.8");
-
-            IO.writeSmallTextFile(lines, Vars.settingsFile);
+            //Tell the user to first download a config file and set the bot up
+            System.out.println("UNABLE TO START BOT. NO CONFIG FILE WAS FOUND. PLEASE DOWNLOAD EXAMPLE CONFIG FILE AND PUT IT IN THE SAME DIRECTORY AS THE .jar OF THE BOT. CONFIG FILE EXAMPLE: http://fkorstanje.nl/aa/rb/RoboBoi_Settings.txt\nTHIS IS A ONE-TIME PROCESS, YOU CAN CHANGE THE CONFIG FILE WITH BOT COMMANDS AFTER THE FIRST RUN.\nFOR MORE HELP WITH THE CONFIG FILE, VISIT: http://fkorstanje.nl/aa/rb/RoboBoi-Help-ConfigCommand.txt");
+            return;
         }
 
         //Check if score file exists.
@@ -72,6 +66,28 @@ public class Main {
         //Initialize the client with the bot token
         jda = new JDABuilder().setToken(token).build();
 
+        //Set some variables
+        Vars.appInfo = jda.retrieveApplicationInfo().complete();
+        Vars.botName = jda.getSelfUser().getName();
+        Vars.botOwner = Vars.appInfo.getOwner().getName();
+
+        //Set the variables from the settings file
+        Vars.botPrefix = BotSettings.getValueString("bot_prefix");
+        Vars.systemMessagesChannel = BotSettings.getValueString("system_messages_channel");
+        Vars.afkChannel = BotSettings.getValueString("afk_channel");
+        Vars.botLogChannel = BotSettings.getValueString("bot_log_channel");
+        Vars.rulesChannel = BotSettings.getValueString("rules_channel");
+        Vars.ruleAcceptMessage = BotSettings.getValueString("rule_accept_message");
+        Vars.normalPeopleRole = BotSettings.getValueString("normal_people_role");
+        Vars.higherPeopleRole = BotSettings.getValueString("higher_people_role");
+        Vars.superPeopleRole = BotSettings.getValueString("super_people_role");
+        Vars.joinMessage = BotSettings.getValueString("join_message");
+        Vars.leaveMessage = BotSettings.getValueString("leave_message");
+        Vars.banMessage = BotSettings.getValueString("ban_message");
+        Vars.unbanMessage = BotSettings.getValueString("unban_message");
+        Vars.roleGetMessage= BotSettings.getValueString("role_get_message");
+        Vars.boostMessage = BotSettings.getValueString("boost_message");
+
         //Make sure all the events get handled
         jda.addEventListener(new GuildSystem());
         jda.addEventListener(new CommandHandler());
@@ -88,7 +104,12 @@ public class Main {
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
         Runnable task = () -> {
             //List of custom statuses
-            Activity[] statuses = {Activity.listening(Vars.botPrefix + "help"), Activity.playing("RoboBoi v" + Vars.version), Activity.playing("RoboBoi for " + getRuntime(startTime))};
+            Activity[] statuses = {
+                    Activity.listening(Vars.botPrefix + "help"),
+                    Activity.playing(Vars.botName + " v" + Vars.version),
+                    Activity.playing(Vars.botName + " for " + getRuntime(startTime)),
+                    Activity.playing(Vars.botName + " by " + Vars.botOwner)
+            };
 
             //Set the status
             jda.getPresence().setActivity(statuses[index.get()]);

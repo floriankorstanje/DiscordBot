@@ -1,6 +1,7 @@
 package com.florn;
 
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.ApplicationInfo;
 import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.Random;
@@ -10,23 +11,34 @@ public class Vars {
     public static String scoreFile = System.getProperty("user.dir") + "/RoboBoi_Scores.txt";
     public static String settingsFile = System.getProperty("user.dir") + "/RoboBoi_Settings.txt";
     public static String authFile = System.getProperty("user.dir") + "/auth.txt";
-    public static String botPrefix = "$";
-    public static Guild guild = null;
+    public static String botPrefix;
+    public static Guild guild;
     public static Random random = new Random();
-    public static String version = "1.6.1_12";
+    public static String version = "1.7.0_12";
     public static Permission adminCommandPermission = Permission.MESSAGE_MANAGE;
+    public static String joinMessage;
+    public static String leaveMessage;
+    public static String banMessage;
+    public static String roleGetMessage;
+    public static String unbanMessage;
+    public static String boostMessage;
+
+    //Bot Info
+    public static ApplicationInfo appInfo;
+    public static String botName;
+    public static String botOwner;
 
     //Channel IDs
-    public static String systemMessagesChannel = "630799468043829248";
-    public static String afkChannel = "662999958273654834";
-    public static String botLogChannel = "740619727612805241";
-    public static String rulesChannel = "647116578218836018";
+    public static String systemMessagesChannel;
+    public static String afkChannel;
+    public static String botLogChannel;
+    public static String rulesChannel;
 
     //Message IDs
-    public static String ruleAcceptMessage = "737601352921776149";
+    public static String ruleAcceptMessage;
 
     //Role IDs
-    public static String normalPeopleRole = "647149235568902144";
-    public static String higherPeopleRole = "647147137548943422";
-    public static String superPeopleRole = "697405963543642122";
+    public static String normalPeopleRole;
+    public static String higherPeopleRole;
+    public static String superPeopleRole;
 }
