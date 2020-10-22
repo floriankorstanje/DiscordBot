@@ -311,7 +311,7 @@ public class Commands {
             //Tell the user if the command succeeded or not
             if(result == BotSettings.Result.SUCCESS) {
                 //Tell the user the command succeeded
-                e.getChannel().sendMessage("Successfully set \"" + args[1] + "\" to \"" + args[2] + "\". Be aware that some changes need a bot restart fot them to work. Please ask the person who runs the bot to restart.").queue();
+                e.getChannel().sendMessage("Successfully set \"" + args[1] + "\" to \"" + args[2] + "\".").queue();
             } else if(result == BotSettings.Result.INVALID_VALUE) {
                 //Tell the user the value isn't the correct datatype for that key
                 e.getChannel().sendMessage("\"" + args[2] + "\" is not the correct datatype for \"" + args[1] + "\". Type \"" + Vars.botPrefix + "config help\" for more explanation.").queue();
