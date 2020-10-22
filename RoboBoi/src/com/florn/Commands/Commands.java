@@ -320,6 +320,10 @@ public class Commands {
                 //Tell the user that key doesn't exist
                 e.getChannel().sendMessage("\"" + args[1] + "\" is an invalid key name. Type \"" + Vars.botPrefix + "config help\" for more explanation.").queue();
                 return false;
+            } else if(result == BotSettings.Result.NO_NEWLINE_ALLOWED) {
+                //Tell the user that they can't have newlines in the value
+                e.getChannel().sendMessage("You can't put newlines in a value.").queue();
+                return false;
             }
         } else if(args[0].equalsIgnoreCase("get")) {
             //Check if there is enough arguments to run "$config get"

@@ -8,6 +8,9 @@ import java.util.List;
 
 public class BotSettings {
     public static Result setValue(String variableName, String value) throws IOException {
+        if(value.contains("\n"))
+            return Result.NO_NEWLINE_ALLOWED;
+
         List<String> settings = IO.readSmallTextFile(Vars.settingsFile);
         boolean exists = false;
         String setting = "";
@@ -119,6 +122,7 @@ public class BotSettings {
     public enum Result {
         KEY_DOES_NOT_EXIST,
         SUCCESS,
-        INVALID_VALUE
+        INVALID_VALUE,
+        NO_NEWLINE_ALLOWED
     }
 }
