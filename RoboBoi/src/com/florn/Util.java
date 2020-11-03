@@ -84,4 +84,9 @@ public class Util {
 
         return String.format("%040x", new BigInteger(1, generated.getBytes()));
     }
+
+    public static boolean stringContainsItemFromList(String inputStr, String[] items) {
+        //Check if a string contains an item from a list
+        return Arrays.stream(items).anyMatch(inputStr::contains);
+    }
 }

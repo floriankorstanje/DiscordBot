@@ -1,9 +1,12 @@
 package com.florn.Commands;
 
-import com.florn.*;
 import com.florn.Config.BotSettings;
+import com.florn.IO;
+import com.florn.Output;
 import com.florn.ScoreSystem.Rank;
 import com.florn.ScoreSystem.ScoreSystem;
+import com.florn.Util;
+import com.florn.Vars;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
@@ -29,6 +32,7 @@ public class Commands {
         //Add all the item in the ArrayList to one string to send it to the user
         StringBuilder b = new StringBuilder();
 
+        //Add all the help items to the stringbuilder
         for (String helpString : help) {
             if (help.indexOf(helpString) == 0) {
                 b.append(helpString + "\n");
@@ -104,6 +108,7 @@ public class Commands {
                 rank.getAbove().getScore() != -1 ? e.getGuild().getMemberById(rank.getAbove().getId()).getAsMention() + " is " + (rank.getAbove().getScore() - rank.getScore()) + " above you." :
                         "You are on the top of the leaderboard. There is no-one above you :)", false);
 
+        //Send the message
         e.getChannel().sendMessage(b.build()).queue();
 
         return true;
@@ -262,14 +267,15 @@ public class Commands {
     }
 
     public static boolean test(GuildMessageReceivedEvent e, String[] args) {
+        //TEST COMMAND - This is for testing the bot. This is not visible in the help menu. Can only be executed by the owner of the bot
         if (!e.getJDA().retrieveApplicationInfo().complete().getOwner().getId().equals(e.getMember().getId())) {
             Output.noPermission(e.getChannel(), "test");
             return false;
         }
 
+        //Do the thing you want to test
         List<User> reaction = e.getGuild().getTextChannelById(Vars.rulesChannel).retrieveMessageById(Vars.ruleAcceptMessage).complete().getReactions().get(0).retrieveUsers().complete();
         e.getChannel().sendMessage(reaction.toString()).queue();
-
 
         return true;
     }
@@ -282,18 +288,18 @@ public class Commands {
         }
 
         //Check if there are enough arguments
-        if(args.length < 1) {
+        if (args.length < 1) {
             Output.unknownArguments(e.getChannel(), "config", "config <set|get|help> [key_name|*] [value_to_set]");
             return false;
         }
 
         //Check the 1st argument and run set, get or help
-        if(args[0].equalsIgnoreCase("help")) {
+        if (args[0].equalsIgnoreCase("help")) {
             e.getChannel().sendMessage("For config help, please visit: http://fkorstanje.nl/aa/RoboBoi-Help-ConfigCommand.txt").queue();
 
-        } else if(args[0].equalsIgnoreCase("set")) {
+        } else if (args[0].equalsIgnoreCase("set")) {
             //Check if there is enough arguments to run "$config set"
-            if(args.length != 3) {
+            if (args.length != 3) {
                 Output.unknownArguments(e.getChannel(), "config", "config <set|get|help> [variable_name|*] [value_to_set]");
                 return false;
             }
@@ -302,38 +308,38 @@ public class Commands {
 
             //Try to set the value and save the result in a variable
             try {
-                 result = BotSettings.setValue(args[1], args[2]);
+                result = BotSettings.setValue(args[1], args[2]);
             } catch (IOException ioException) {
                 ioException.printStackTrace();
-                return  false;
+                return false;
             }
 
             //Tell the user if the command succeeded or not
-            if(result == BotSettings.Result.SUCCESS) {
+            if (result == BotSettings.Result.SUCCESS) {
                 //Tell the user the command succeeded
                 e.getChannel().sendMessage("Successfully set \"" + args[1] + "\" to \"" + args[2] + "\".").queue();
-            } else if(result == BotSettings.Result.INVALID_VALUE) {
+            } else if (result == BotSettings.Result.INVALID_VALUE) {
                 //Tell the user the value isn't the correct datatype for that key
                 e.getChannel().sendMessage("\"" + args[2] + "\" is not the correct datatype for \"" + args[1] + "\". Type \"" + Vars.botPrefix + "config help\" for more explanation.").queue();
                 return false;
-            } else if(result == BotSettings.Result.KEY_DOES_NOT_EXIST) {
+            } else if (result == BotSettings.Result.KEY_DOES_NOT_EXIST) {
                 //Tell the user that key doesn't exist
                 e.getChannel().sendMessage("\"" + args[1] + "\" is an invalid key name. Type \"" + Vars.botPrefix + "config help\" for more explanation.").queue();
                 return false;
-            } else if(result == BotSettings.Result.NO_NEWLINE_ALLOWED) {
+            } else if (result == BotSettings.Result.INVALID_CHARACTERS) {
                 //Tell the user that they can't have newlines in the value
-                e.getChannel().sendMessage("You can't put newlines in a value.").queue();
+                e.getChannel().sendMessage("Your value contains invalid characters.").queue();
                 return false;
             }
-        } else if(args[0].equalsIgnoreCase("get")) {
+        } else if (args[0].equalsIgnoreCase("get")) {
             //Check if there is enough arguments to run "$config get"
-            if(args.length != 2) {
+            if (args.length != 2) {
                 Output.unknownArguments(e.getChannel(), "config", "config <set|get|help> [variable_name|*] [value_to_set]");
                 return false;
             }
 
             //Check if the user wants all the values or just one
-            if(args[1].equalsIgnoreCase("*")) {
+            if (args[1].equalsIgnoreCase("*")) {
                 //Get all the lines in the settings file
                 List<String> lines;
 
@@ -350,8 +356,8 @@ public class Commands {
                 builder.setColor(Vars.random.nextInt(0xFFFFFF));
 
                 //Fill in the embed builder
-                for(String line : lines) {
-                    if(line.contains("=")) {
+                for (String line : lines) {
+                    if (line.contains("=")) {
                         String[] setting = line.split("=");
                         builder.addField("\"" + setting[0] + "\":", "\"" + setting[1] + "\"", false);
                     }

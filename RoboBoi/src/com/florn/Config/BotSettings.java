@@ -1,6 +1,7 @@
 package com.florn.Config;
 
 import com.florn.IO;
+import com.florn.Util;
 import com.florn.Vars;
 
 import java.io.IOException;
@@ -8,8 +9,11 @@ import java.util.List;
 
 public class BotSettings {
     public static Result setValue(String variableName, String value) throws IOException {
-        if(value.contains("\n"))
-            return Result.NO_NEWLINE_ALLOWED;
+        //List to make sure people don't break the bot
+        String[] invalidStrings = { "\n", };
+
+        if(Util.stringContainsItemFromList(value, invalidStrings))
+            return Result.INVALID_CHARACTERS;
 
         List<String> settings = IO.readSmallTextFile(Vars.settingsFile);
         boolean exists = false;
@@ -123,6 +127,6 @@ public class BotSettings {
         KEY_DOES_NOT_EXIST,
         SUCCESS,
         INVALID_VALUE,
-        NO_NEWLINE_ALLOWED
+        INVALID_CHARACTERS
     }
 }

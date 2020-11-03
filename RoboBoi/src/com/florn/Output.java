@@ -32,11 +32,11 @@ public class Output {
     }
 
     public static void unknownArguments(TextChannel channel, String command, String usage) {
-        channel.sendMessage("Unknown argument(s) for command \"$" + command + "\".\nUsage: $" + usage).queue();
+        channel.sendMessage("Unknown argument(s) for command \"" + Vars.botPrefix + command + "\".\nUsage: " + Vars.botPrefix + usage).queue();
     }
 
     public static void noPermission(TextChannel channel, String command) {
-        channel.sendMessage("You do not have the permission to execute command \"$" + command + "\"").queue();
+        channel.sendMessage("You do not have the permission to execute command \"" + Vars.botPrefix + command + "\"").queue();
     }
 
     public static void unknownUid(TextChannel channel, String uid) {

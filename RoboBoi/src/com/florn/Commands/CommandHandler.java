@@ -35,7 +35,7 @@ public class CommandHandler extends ListenerAdapter {
             String[] args = Util.removeTheElement(msg.replace(cmd, "").split(" "), 0);
 
             //Check if the command is known and then execute it.
-            //Commands return boolean if they succeeded or not
+            //Commands return a boolean if they succeeded or not
             if (cmd.equalsIgnoreCase("help")) {
                 //Command $help
                 success = Commands.help(event);
@@ -44,7 +44,6 @@ public class CommandHandler extends ListenerAdapter {
                 try {
                     success = Commands.Score(event, args);
                 } catch (IOException e) {
-                    e.printStackTrace();
                     success = false;
                 }
             } else if (cmd.equalsIgnoreCase("modscore")) {
@@ -59,7 +58,7 @@ public class CommandHandler extends ListenerAdapter {
             } else if (cmd.equalsIgnoreCase("test")) {
                 //Command $test
                 success = Commands.test(event, args);
-            } else if(cmd.equalsIgnoreCase(("config"))) {
+            } else if (cmd.equalsIgnoreCase(("config"))) {
                 //Command $config
                 success = Commands.config(event, args);
             } else {
