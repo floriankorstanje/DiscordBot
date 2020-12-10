@@ -32,34 +32,6 @@ public class AddScoreEvents extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildMessageReactionAdd(@Nonnull GuildMessageReactionAddEvent event) {
-        //If the user is a bot, don't give them points
-        if (event.getMember().getUser().isBot())
-            return;
-
-        try {
-            //Update the role
-            ScoreSystem.updateUserRole(event.getMember(), event.getGuild());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onGuildMessageReactionRemove(@Nonnull GuildMessageReactionRemoveEvent event) {
-        //If the user is a bot, don't give them points
-        if (event.getMember().getUser().isBot())
-            return;
-
-        try {
-            //Update the role
-            ScoreSystem.updateUserRole(event.getMember(), event.getGuild());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public void onGuildMemberUpdateBoostTime(@Nonnull GuildMemberUpdateBoostTimeEvent event) {
         try {
             //No need to check if it is a bot this time, since bots can't boost a server

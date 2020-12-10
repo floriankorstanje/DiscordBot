@@ -27,8 +27,6 @@ public class Output {
 
         //Send the embed to the text channel
         channel.sendMessage(b.build()).queue();
-
-        System.out.println(executor.getEffectiveName() + " executed command \"$" + command + "\" in channel #" + executionChannel.getName());
     }
 
     public static void unknownArguments(TextChannel channel, String command, String usage) {
@@ -41,5 +39,9 @@ public class Output {
 
     public static void unknownUid(TextChannel channel, String uid) {
         channel.sendMessage("\"" + uid + "\" is not a valid uid.").queue();
+    }
+
+    public static void ConsoleLog(String operation, Member m, String info) {
+        System.out.println(operation + ":" + m.getId() + "(" + m.getEffectiveName() + ")->" + info);
     }
 }

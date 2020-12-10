@@ -1,11 +1,8 @@
 package com.florn.ScoreSystem;
 
+import com.florn.*;
 import com.florn.Config.BotSettings;
 import com.florn.Config.Range;
-import com.florn.GuildSystem;
-import com.florn.IO;
-import com.florn.Util;
-import com.florn.Vars;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -126,6 +123,9 @@ public class ScoreSystem {
 
                     //Announce that the user got a new role
                     GuildSystem.announceUserNewRole(m, normalPeeps, g);
+
+                    //Output to console
+                    Output.ConsoleLog("UpdateRank", m, "\"" + normalPeeps.getName() + "\"");
                 }
             } else if (score <= superPeopleScore) {
                 //Remove super peeps since the user doesn't have the score for it anymore
@@ -139,6 +139,9 @@ public class ScoreSystem {
 
                     //Announce that the user got a new role
                     GuildSystem.announceUserNewRole(m, higherPeeps, g);
+
+                    //Output to console
+                    Output.ConsoleLog("UpdateRank", m, "\"" + higherPeeps.getName() + "\"");
                 }
             } else {
                 //If the user has more than 2000 points, they get super peeps
@@ -153,6 +156,9 @@ public class ScoreSystem {
 
                     //Announce that the user got a new role
                     GuildSystem.announceUserNewRole(m, superPeeps, g);
+
+                    //Output to console
+                    Output.ConsoleLog("UpdateRank", m, "\"" + superPeeps.getName() + "\"");
                 }
             }
         }
@@ -254,6 +260,9 @@ public class ScoreSystem {
 
         //Write the new contents to the score file
         IO.writeSmallTextFile(lines, Vars.scoreFile);
+
+        //Output to console
+        Output.ConsoleLog("AddScore", m, String.format("%02d", score));
     }
 
     public static Rank getRank(Member m, Guild g) throws IOException {
