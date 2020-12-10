@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="RoboBoi:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2597aac0-2069-4e6f-b5f0-9931cac24578" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1kyS91WaEzJbmWpNqT7WWh7r7hH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.florn.Main" />
+      <module name="RoboBoi" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2597aac0-2069-4e6f-b5f0-9931cac24578" name="Default Changelist" comment="" />
+      <created>1606671183270</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1606671183270</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="734" y="175" width="1092" height="762" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607203462518">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="734" y="175" width="1092" height="762" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1040/2560.24.1680.1050/-1050.-342.1050.1680@0.0.2560.1040" timestamp="1607203462518" />
+    <state x="1010" y="310" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1607203457256">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="1010" y="310" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.2560.1040/2560.24.1680.1050/-1050.-342.1050.1680@0.0.2560.1040" timestamp="1607203457256" />
+    <state x="1060" y="275" key="FileChooserDialogImpl" timestamp="1607014817394">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="1060" y="275" key="FileChooserDialogImpl/0.0.2560.1040/2560.24.1680.1050/-1050.-342.1050.1680@0.0.2560.1040" timestamp="1607014817394" />
+    <state width="2517" height="282" key="GridCell.Tab.0.bottom" timestamp="1607610390666">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="282" key="GridCell.Tab.0.bottom/0.0.2560.1040/2560.24.1680.1050/-1050.-342.1050.1680@0.0.2560.1040" timestamp="1607610390666" />
+    <state width="2517" height="282" key="GridCell.Tab.0.center" timestamp="1607610390666">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="282" key="GridCell.Tab.0.center/0.0.2560.1040/2560.24.1680.1050/-1050.-342.1050.1680@0.0.2560.1040" timestamp="1607610390666" />
+    <state width="2517" height="282" key="GridCell.Tab.0.left" timestamp="1607610390665">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="282" key="GridCell.Tab.0.left/0.0.2560.1040/2560.24.1680.1050/-1050.-342.1050.1680@0.0.2560.1040" timestamp="1607610390665" />
+    <state width="2517" height="282" key="GridCell.Tab.0.right" timestamp="1607610390666">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="2517" height="282" key="GridCell.Tab.0.right/0.0.2560.1040/2560.24.1680.1050/-1050.-342.1050.1680@0.0.2560.1040" timestamp="1607610390666" />
+    <state x="760" y="94" key="SettingsEditor" timestamp="1607247029744">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="760" y="94" key="SettingsEditor/0.0.2560.1040/2560.24.1680.1050/-1050.-342.1050.1680@0.0.2560.1040" timestamp="1607247029744" />
+  </component>
+</project>

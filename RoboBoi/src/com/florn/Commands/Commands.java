@@ -22,11 +22,12 @@ public class Commands {
         //ArrayList to easily add new lines in the help message
         ArrayList<String> help = new ArrayList<>();
         help.add("**Help for " + e.getJDA().getSelfUser().getName() + " version " + Vars.version + "**");
+        help.add("Reactions to messages: ✅ Succeeded, ❌ Unknown Command, \uD83D\uDC4E Other error.");
         help.add("modscore <uid> <add|remove|set> <score> - ADMIN ONLY - Modifies a user's score.");
         help.add("say <message> - ADMIN ONLY - Sends a message as the bot");
         help.add("help - Shows this.");
         help.add("version - Shows the bot version.");
-        help.add("score [uid|*] - Without arguments, this will show your score. Argument UID will show someone else's score. * will send you the score file.");
+        help.add("score [uid] - Without arguments, this will show your score. Argument UID will show someone else's score.");
         help.add("config <set|get|help> [variable_name|*] [value_to_set] - ADMIN ONLY - Modifies the config for this bot.");
 
         //Add all the item in the ArrayList to one string to send it to the user
@@ -34,7 +35,7 @@ public class Commands {
 
         //Add all the help items to the stringbuilder
         for (String helpString : help) {
-            if (help.indexOf(helpString) == 0) {
+            if (help.indexOf(helpString) < 2) {
                 b.append(helpString + "\n");
             } else {
                 b.append(Vars.botPrefix + helpString + "\n");
@@ -54,11 +55,6 @@ public class Commands {
 
         //Check if the command got arguments
         if (args.length == 1) {
-            if (args[0].equals("*")) {
-                e.getChannel().sendFile(new File(Vars.scoreFile)).queue();
-                return true;
-            }
-
             //Check if args[0] contains uid
             try {
                 m = e.getGuild().getMemberById(args[0]);
@@ -101,11 +97,11 @@ public class Commands {
         b.addField("Rank", rank.getPosition() + " out of " + rank.getTotalMembers() + "\nTop " + rank.getTopPercentage() + "%", false);
 
         b.addField("Below you",
-                rank.getBelow().getScore() != -1 ? e.getGuild().getMemberById(rank.getBelow().getId()).getAsMention() + " is " + (rank.getScore() - rank.getBelow().getScore()) + " below you." :
+                rank.getBelow().getScore() != -1 ? e.getGuild().getMemberById(rank.getBelow().getId()).getAsMention() + " is " + (rank.getScore() - rank.getBelow().getScore()) + " points below you." :
                         "You are on the bottom of the leaderboard. There is no-one below you :(", false);
 
         b.addField("Above you",
-                rank.getAbove().getScore() != -1 ? e.getGuild().getMemberById(rank.getAbove().getId()).getAsMention() + " is " + (rank.getAbove().getScore() - rank.getScore()) + " above you." :
+                rank.getAbove().getScore() != -1 ? e.getGuild().getMemberById(rank.getAbove().getId()).getAsMention() + " is " + (rank.getAbove().getScore() - rank.getScore()) + " points above you." :
                         "You are on the top of the leaderboard. There is no-one above you :)", false);
 
         //Send the message

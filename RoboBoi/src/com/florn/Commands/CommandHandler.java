@@ -67,8 +67,9 @@ public class CommandHandler extends ListenerAdapter {
                 success = false;
             }
 
-            //Log the command
+            //Log the command and tell the user if the command succeeded or not
             Output.Log(cmd, originalMessage, event.getMember(), event.getChannel(), recognized, success);
+            event.getMessage().addReaction(success ? "✅" : (recognized ? "👎" : "❌")).complete();
         }
     }
 }

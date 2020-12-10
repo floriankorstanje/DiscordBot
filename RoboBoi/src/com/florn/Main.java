@@ -2,13 +2,11 @@ package com.florn;
 
 import com.florn.Commands.CommandHandler;
 import com.florn.Config.BotSettings;
-import com.florn.Config.Range;
 import com.florn.ScoreSystem.AddScoreEvents;
 import com.florn.ScoreSystem.ScoreSystem;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.Member;
 
 import javax.security.auth.login.LoginException;
 import java.io.File;
@@ -19,7 +17,6 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
