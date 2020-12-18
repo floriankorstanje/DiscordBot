@@ -5,6 +5,7 @@ import com.florn.IO;
 import com.florn.Output;
 import com.florn.ScoreSystem.Rank;
 import com.florn.ScoreSystem.ScoreSystem;
+import com.florn.ScoreSystem.UserScore;
 import com.florn.Util;
 import com.florn.Vars;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -28,6 +29,7 @@ public class Commands {
         help.add("help - Shows this.");
         help.add("version - Shows the bot version.");
         help.add("score [uid] - Without arguments, this will show your score. Argument UID will show someone else's score.");
+        help.add("leaderboard - This will show the score leaderboard.");
         help.add("config <set|get|help> [variable_name|*] [value_to_set] - ADMIN ONLY - Modifies the config for this bot.");
 
         //Add all the item in the ArrayList to one string to send it to the user
@@ -74,9 +76,13 @@ public class Commands {
         //Get the user's name and figure out if it has to end in s or 's
         String userName = m.getEffectiveName() + (m.getEffectiveName().toCharArray()[m.getEffectiveName().length() - 1] == 's' ? "'" : "'s");
 
+        //Get the role names
+        String higherPeople = e.getGuild().getRoleById(Vars.higherPeopleRole).getName();
+        String superPeople = e.getGuild().getRoleById(Vars.superPeopleRole).getName();
+
         //Set some things in the embed
         b.setTitle(userName + " Score");
-        b.setFooter(Vars.guild.getJDA().getSelfUser().getName() + " made by florn");
+        b.setFooter(Vars.botName + " made by " + Vars.botOwner);
 
         //Set a random color for the embed
         b.setColor(Util.random(0x0, 0xFFFFFF));
@@ -87,21 +93,21 @@ public class Commands {
         //Add all the fields of the embed builder
         b.addField("User", m.getAsMention(), false);
 
-        b.addField("Higher Peeps Progress", rank.getScore() + "/500\n" + rank.getHigherPeepsProgress() + "% progress", false);
-        b.addField("Super Peeps Progress", rank.getScore() + "/2000\n" + rank.getSuperPeepsProgress() + "% progress", false);
+        b.addField(higherPeople + " Progress", rank.getScore() + "/" + BotSettings.getValueInt("higher_people_points") + "\n" + rank.getHigherPeepsProgress() + "% progress", false);
+        b.addField(superPeople + " Progress", rank.getScore() + "/" + BotSettings.getValueInt("super_people_points") + "\n" + rank.getSuperPeepsProgress() + "% progress", false);
 
         b.addField("Overall Progress",
-                m.getEffectiveName() + " " + (rank.getUserAchievedHigherPeeps() ? "achieved Higher Peeps!" : "hasn't achieved Higher Peeps yet.") +
-                        "\n" + m.getEffectiveName() + " " + (rank.getUserAchievedSuperPeeps() ? "achieved Super Peeps!" : "hasn't achieved Super Peeps yet."), false);
+                m.getEffectiveName() + " " + (rank.getUserAchievedHigherPeeps() ? "achieved " + higherPeople + "!" : "hasn't achieved " + higherPeople + " yet.") +
+                        "\n" + m.getEffectiveName() + " " + (rank.getUserAchievedSuperPeeps() ? "achieved " + superPeople + "!" : "hasn't achieved " + superPeople + " yet."), false);
 
         b.addField("Rank", rank.getPosition() + " out of " + rank.getTotalMembers() + "\nTop " + rank.getTopPercentage() + "%", false);
 
         b.addField("Below you",
-                rank.getBelow().getScore() != -1 ? e.getGuild().getMemberById(rank.getBelow().getId()).getAsMention() + " is " + (rank.getScore() - rank.getBelow().getScore()) + " points below you." :
+                rank.getBelow().getScore() != -1 ? e.getGuild().getMemberById(rank.getBelow().getId()).getAsMention() + " is " + (rank.getScore() - rank.getBelow().getScore()) + " points below you. (" + ScoreSystem.getPoints(e.getGuild().getMemberById(rank.getBelow().getId())) + ")" :
                         "You are on the bottom of the leaderboard. There is no-one below you :(", false);
 
         b.addField("Above you",
-                rank.getAbove().getScore() != -1 ? e.getGuild().getMemberById(rank.getAbove().getId()).getAsMention() + " is " + (rank.getAbove().getScore() - rank.getScore()) + " points above you." :
+                rank.getAbove().getScore() != -1 ? e.getGuild().getMemberById(rank.getAbove().getId()).getAsMention() + " is " + (rank.getAbove().getScore() - rank.getScore()) + " points above you. (" + ScoreSystem.getPoints(e.getGuild().getMemberById(rank.getAbove().getId())) + ")" :
                         "You are on the top of the leaderboard. There is no-one above you :)", false);
 
         //Send the message
@@ -167,8 +173,8 @@ public class Commands {
         } else if (args[1].equals("remove")) {
             //Remove the points
             try {
-                //If the user's points will go below 26, cancel
-                if (ScoreSystem.getPoints(toModify) - Integer.parseInt(args[2]) < 26) {
+                //If the user's points will go below 0, cancel
+                if (ScoreSystem.getPoints(toModify) - Integer.parseInt(args[2]) < 0) {
                     e.getChannel().sendMessage("Unable to remove " + args[2] + " points from " + toModify.getEffectiveName() + ". Lowest score value is " + (Integer.parseInt(args[2]) - (26 - (ScoreSystem.getPoints(toModify) - Integer.parseInt(args[2]))))).queue();
                     return false;
                 }
@@ -188,9 +194,9 @@ public class Commands {
                 return false;
             }
         } else if (args[1].equals("set")) {
-            //If the user's points will go below 26, cancel
-            if (Integer.parseInt(args[2]) < 26) {
-                e.getChannel().sendMessage("Can't set users score lower than 26.").queue();
+            //If the user's points will go below 0, cancel
+            if (Integer.parseInt(args[2]) < 0) {
+                e.getChannel().sendMessage("Can't set users score lower than 0.").queue();
                 return false;
             }
 
@@ -270,8 +276,7 @@ public class Commands {
         }
 
         //Do the thing you want to test
-        List<User> reaction = e.getGuild().getTextChannelById(Vars.rulesChannel).retrieveMessageById(Vars.ruleAcceptMessage).complete().getReactions().get(0).retrieveUsers().complete();
-        e.getChannel().sendMessage(reaction.toString()).queue();
+
 
         return true;
     }
@@ -363,6 +368,41 @@ public class Commands {
                 e.getChannel().sendMessage(builder.build()).queue();
             }
         }
+
+        return true;
+    }
+
+    public static boolean leaderboard(GuildMessageReceivedEvent e) {
+        EmbedBuilder b = new EmbedBuilder();
+        UserScore[] leaderboard = new UserScore[0];
+        try {
+            leaderboard = ScoreSystem.getLeaderboard();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+        //Make the embed look good
+        b.setTitle("Score Leaderboard");
+        b.setFooter(Vars.botName + " made by " + Vars.botOwner);
+        b.setColor(Vars.random.nextInt(0xFFFFFF));
+
+        //Add all the users with their score to the leaderboard embed
+        for (int i = 0; i < leaderboard.length; i++) {
+            String user = e.getGuild().getMemberById(leaderboard[i].getId()).getAsMention() + (leaderboard[i].getId().equalsIgnoreCase(e.getAuthor().getId()) ? " (you)" : "");
+            int difference = 0;
+            boolean senderHasMorePoints;
+            try {
+                difference = ScoreSystem.getPoints(e.getMember()) - leaderboard[i].getScore();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            senderHasMorePoints = difference <= 0;
+            difference = Math.abs(difference);
+            b.addField("#" + (i + 1), user + "\n__" + leaderboard[i].getScore() + "__ *(" + difference + " points " + (senderHasMorePoints ? "more" : "less") + " than you.)*", false);
+        }
+
+        //Send the embed
+        e.getChannel().sendMessage(b.build()).queue();
 
         return true;
     }

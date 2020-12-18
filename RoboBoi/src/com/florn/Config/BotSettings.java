@@ -10,9 +10,9 @@ import java.util.List;
 public class BotSettings {
     public static Result setValue(String variableName, String value) throws IOException {
         //List to make sure people don't break the bot
-        String[] invalidStrings = { "\n", };
+        String[] invalidStrings = {"\n",};
 
-        if(Util.stringContainsItemFromList(value, invalidStrings))
+        if (Util.stringContainsItemFromList(value, invalidStrings))
             return Result.INVALID_CHARACTERS;
 
         List<String> settings = IO.readSmallTextFile(Vars.settingsFile);
@@ -45,7 +45,7 @@ public class BotSettings {
                 int min = Integer.parseInt(value.split(",")[0]);
                 int max = Integer.parseInt(value.split(",")[1]);
 
-                if(min > max)
+                if (min > max)
                     throw new Exception();
             } catch (Exception e) {
                 return Result.INVALID_VALUE;

@@ -351,4 +351,30 @@ public class ScoreSystem {
 
         return Integer.parseInt(lines.get(userLine).split(":")[1]);
     }
+
+    public static UserScore[] getLeaderboard() throws IOException {
+        List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
+        UserScore[] scores = new UserScore[lines.size()];
+        UserScore[] sorted;
+        UserScore[] leaderboard = new UserScore[5];
+
+        //Put all the users and their scores in an UserScore array
+        for (int i = 0; i < lines.size(); i++) {
+            try {
+                String[] splitLine = lines.get(i).split(":");
+                String uid = splitLine[0];
+                int score = Integer.parseInt(splitLine[1]);
+                scores[i] = new UserScore(uid, score);
+            } catch (Exception ignored) {
+            }
+        }
+
+        sorted = reverseUserScoreArray(sortUserScoreArray(scores));
+
+        for (int i = 0; i < 5; i++) {
+            leaderboard[i] = sorted[i];
+        }
+
+        return leaderboard;
+    }
 }

@@ -14,7 +14,7 @@ public class Vars {
     public static String botPrefix;
     public static Guild guild;
     public static Random random = new Random();
-    public static String version = "1.7.2_6";
+    public static String version = "1.8.0_4";
     public static Permission adminCommandPermission = Permission.MESSAGE_MANAGE;
     public static String joinMessage;
     public static String leaveMessage;

@@ -61,6 +61,9 @@ public class CommandHandler extends ListenerAdapter {
             } else if (cmd.equalsIgnoreCase(("config"))) {
                 //Command $config
                 success = Commands.config(event, args);
+            } else if (cmd.equalsIgnoreCase("leaderboard")) {
+                //Command $leaderboard
+                success = Commands.leaderboard(event);
             } else {
                 //If the command is unrecognized, set recognized and success to false
                 recognized = false;

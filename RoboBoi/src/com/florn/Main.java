@@ -113,7 +113,7 @@ public class Main {
         Instant finish = Instant.now();
         long elapsed = Duration.between(start, finish).toMillis();
         return String.format("%02d:%02d",
-                (int) ((elapsed / (1000*60*60))),
+                (int) ((elapsed / (1000 * 60 * 60))),
                 (int) ((elapsed / (1000 * 60)) % 60));
     }
 
@@ -137,7 +137,7 @@ public class Main {
                     Vars.leaveMessage = BotSettings.getValueString("leave_message");
                     Vars.banMessage = BotSettings.getValueString("ban_message");
                     Vars.unbanMessage = BotSettings.getValueString("unban_message");
-                    Vars.roleGetMessage= BotSettings.getValueString("role_get_message");
+                    Vars.roleGetMessage = BotSettings.getValueString("role_get_message");
                     Vars.boostMessage = BotSettings.getValueString("boost_message");
 
                     //Wait 2.5s
