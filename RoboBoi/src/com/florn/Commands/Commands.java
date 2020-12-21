@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Commands {
-    public static boolean help(GuildMessageReceivedEvent e) {
+    public static boolean help(CommandEvent e) {
         //ArrayList to easily add new lines in the help message
         ArrayList<String> help = new ArrayList<>();
         help.add("**Help for " + e.getJDA().getSelfUser().getName() + " version " + Vars.version + "**");
@@ -50,7 +50,7 @@ public class Commands {
         return true;
     }
 
-    public static boolean Score(GuildMessageReceivedEvent e, String[] args) throws IOException {
+    public static boolean Score(CommandEvent e, String[] args) throws IOException {
         //Get some basic variables needed for the command
         Member m = null;
         EmbedBuilder b = new EmbedBuilder();
@@ -116,7 +116,7 @@ public class Commands {
         return true;
     }
 
-    public static boolean modScore(GuildMessageReceivedEvent e, String[] args) {
+    public static boolean modScore(CommandEvent e, String[] args) {
         //Check if the user has permissions to execute this command
         if (!e.getMember().hasPermission(Vars.adminCommandPermission)) {
             Output.noPermission(e.getChannel(), "modscore");
@@ -220,7 +220,7 @@ public class Commands {
         return true;
     }
 
-    public static boolean say(GuildMessageReceivedEvent e, String[] args) {
+    public static boolean say(CommandEvent e, String[] args) {
         //Check if there are arguments
         if (args.length == 0) {
             Output.unknownArguments(e.getChannel(), "say", "say <message>");
@@ -247,7 +247,7 @@ public class Commands {
         return true;
     }
 
-    public static boolean version(GuildMessageReceivedEvent e) {
+    public static boolean version(CommandEvent e) {
         //Get versions
         String botVersion = Vars.version;
         String javaVersion = System.getProperty("java.version");
@@ -268,7 +268,7 @@ public class Commands {
         return true;
     }
 
-    public static boolean test(GuildMessageReceivedEvent e, String[] args) {
+    public static boolean test(CommandEvent e, String[] args) {
         //TEST COMMAND - This is for testing the bot. This is not visible in the help menu. Can only be executed by the owner of the bot
         if (!e.getJDA().retrieveApplicationInfo().complete().getOwner().getId().equals(e.getMember().getId())) {
             Output.noPermission(e.getChannel(), "test");
@@ -281,7 +281,7 @@ public class Commands {
         return true;
     }
 
-    public static boolean config(GuildMessageReceivedEvent e, String[] args) {
+    public static boolean config(CommandEvent e, String[] args) {
         //Check if the user has permissions to do this
         if (!e.getMember().hasPermission(Vars.adminCommandPermission)) {
             Output.noPermission(e.getChannel(), "config");
@@ -372,7 +372,7 @@ public class Commands {
         return true;
     }
 
-    public static boolean leaderboard(GuildMessageReceivedEvent e) {
+    public static boolean leaderboard(CommandEvent e) {
         EmbedBuilder b = new EmbedBuilder();
         UserScore[] leaderboard = new UserScore[0];
         try {

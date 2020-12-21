@@ -4,15 +4,35 @@ import com.florn.Output;
 import com.florn.Util;
 import com.florn.Vars;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
 
 public class CommandHandler extends ListenerAdapter {
+    private String[] reactions = {"✅", "👎", "❌"};
+
     @Override
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
-        //Make sure Vars.guild is set to snaekyy and not to null
+        CommandEvent commandEvent = new CommandEvent(event);
+        HandleCommand(commandEvent);
+    }
+
+    @Override
+    public void onGuildMessageUpdate(@NotNull GuildMessageUpdateEvent event) {
+        CommandEvent commandEvent = new CommandEvent(event);
+
+        //Make sure the bot doesn't stack reactions
+        for(int i = 0; i < reactions.length; i++)
+            commandEvent.getMessage().removeReaction(reactions[i], commandEvent.getJDA().getSelfUser()).complete();
+
+        HandleCommand(commandEvent);
+    }
+
+    private void HandleCommand(CommandEvent event) {
+        //Make sure Vars.guild is set to the right one
         Vars.guild = event.getGuild();
 
         //Get the message received
@@ -72,7 +92,7 @@ public class CommandHandler extends ListenerAdapter {
 
             //Log the command, tell the user if the command succeeded or not and output to console
             Output.Log(cmd, originalMessage, event.getMember(), event.getChannel(), recognized, success);
-            event.getMessage().addReaction(success ? "✅" : (recognized ? "👎" : "❌")).complete();
+            event.getMessage().addReaction(success ? reactions[0] : (recognized ? reactions[1] : reactions[2])).complete();
             Output.ConsoleLog("Command", event.getMember(), "\"$" + cmd + " [" + args.length + "]\"");
         }
     }
