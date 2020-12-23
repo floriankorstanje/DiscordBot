@@ -1,6 +1,5 @@
 package com.florn;
 
-import com.florn.Config.BotSettings;
 import com.florn.ScoreSystem.ScoreSystem;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -33,10 +32,6 @@ public class GuildSystem extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(@Nonnull GuildMemberJoinEvent event) {
-        try {
-            //Make sure the entire score file is right
-            ScoreSystem.fixScoreList(event.getGuild());
-
             //Give the joined user a role if they have accepted the rules previously
             List<User> reactions = event.getGuild().getTextChannelById(Vars.rulesChannel).retrieveMessageById(Vars.ruleAcceptMessage).complete().getReactions().get(0).retrieveUsers().complete();
             for (User user : reactions) {
@@ -45,9 +40,6 @@ public class GuildSystem extends ListenerAdapter {
                     event.getGuild().addRoleToMember(event.getMember().getId(), role).complete();
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         //Announce user join
         event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage(getMessage(Vars.joinMessage,

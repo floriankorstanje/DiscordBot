@@ -21,7 +21,7 @@ public class IO {
 
     public static String getPageContents(URL url) throws IOException {
         Scanner sc = new Scanner(url.openStream());
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         while (sc.hasNext()) {
             sb.append(sc.next());

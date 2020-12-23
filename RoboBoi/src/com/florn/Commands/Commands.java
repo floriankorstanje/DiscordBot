@@ -10,49 +10,40 @@ import com.florn.Util;
 import com.florn.Vars;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Commands {
     public static boolean help(CommandEvent e) {
-        //ArrayList to easily add new lines in the help message
-        ArrayList<String> help = new ArrayList<>();
-        help.add("**Help for " + e.getJDA().getSelfUser().getName() + " version " + Vars.version + "**");
-        help.add("Reactions to messages: ✅ Succeeded, ❌ Unknown Command, \uD83D\uDC4E Other error.");
-        help.add("modscore <uid> <add|remove|set> <score> - ADMIN ONLY - Modifies a user's score.");
-        help.add("say <message> - ADMIN ONLY - Sends a message as the bot");
-        help.add("help - Shows this.");
-        help.add("version - Shows the bot version.");
-        help.add("score [uid] - Without arguments, this will show your score. Argument UID will show someone else's score.");
-        help.add("leaderboard - This will show the score leaderboard.");
-        help.add("config <set|get|help> [variable_name|*] [value_to_set] - ADMIN ONLY - Modifies the config for this bot.");
+        //Make an embed from the help list
+        EmbedBuilder builder = new EmbedBuilder();
 
-        //Add all the item in the ArrayList to one string to send it to the user
-        StringBuilder b = new StringBuilder();
+        //Add basic stuff to the embed
+        builder.setTitle("Help for " + Vars.botName + " v" + Vars.version);
+        builder.setFooter(Vars.botName + " made by " + Vars.botOwner);
+        builder.setColor(Util.random(0x000000, 0xFFFFFF));
+        builder.addField("Reactions to messages: ✅ Succeeded, ❌ Unknown Command, 👎 Other error.", "", false);
+        builder.addField("[] - Optional argument; <> - Required argument", "", false);
 
-        //Add all the help items to the stringbuilder
-        for (String helpString : help) {
-            if (help.indexOf(helpString) < 2) {
-                b.append(helpString + "\n");
-            } else {
-                b.append(Vars.botPrefix + helpString + "\n");
-            }
-        }
+        //Add all the commands
+        builder.addField(Vars.botPrefix + "modscore <uid> <add|remove|set> <score>", "[*ADMIN ONLY*] Modifies a user's score.", false);
+        builder.addField(Vars.botPrefix + "say <channel-id> <message>", "[*ADMIN ONLY*] Send a message as the bot in the specified channel.", false);
+        builder.addField(Vars.botPrefix + "config <set|get|help> [variable-name|*] [value-to-set]", "[*ADMIN ONLY*] Modifies or returns a config variable for the bot.", false);
+        builder.addField(Vars.botPrefix + "score [uid]", "Shows your score. Shows someone else's score when given an argument.", false);
+        builder.addField(Vars.botPrefix + "leaderboard", "Shows the score leaderboard.", false);
+        builder.addField(Vars.botPrefix + "version", "Shows the bot version.", false);
+        builder.addField(Vars.botPrefix + "help", "Shows this.", false);
 
-        //PM the help message to the user
-        Util.sendPrivateMessage(e.getMember().getUser(), b.toString(), e.getChannel());
+        //Send the help message
+        e.getChannel().sendMessage(builder.build()).queue();
 
         return true;
     }
 
     public static boolean Score(CommandEvent e, String[] args) throws IOException {
         //Get some basic variables needed for the command
-        Member m = null;
+        Member m;
         EmbedBuilder b = new EmbedBuilder();
 
         //Check if the command got arguments
@@ -103,11 +94,11 @@ public class Commands {
         b.addField("Rank", rank.getPosition() + " out of " + rank.getTotalMembers() + "\nTop " + rank.getTopPercentage() + "%", false);
 
         b.addField("Below you",
-                rank.getBelow().getScore() != -1 ? e.getGuild().getMemberById(rank.getBelow().getId()).getAsMention() + " is " + (rank.getScore() - rank.getBelow().getScore()) + " points below you. (" + ScoreSystem.getPoints(e.getGuild().getMemberById(rank.getBelow().getId())) + ")" :
+                rank.getBelow().getScore() != -1 ? e.getGuild().getMemberById(rank.getBelow().getUID()).getAsMention() + " is " + (rank.getScore() - rank.getBelow().getScore()) + " points below you. (" + ScoreSystem.getPoints(e.getGuild().getMemberById(rank.getBelow().getUID())) + ")" :
                         "You are on the bottom of the leaderboard. There is no-one below you :(", false);
 
         b.addField("Above you",
-                rank.getAbove().getScore() != -1 ? e.getGuild().getMemberById(rank.getAbove().getId()).getAsMention() + " is " + (rank.getAbove().getScore() - rank.getScore()) + " points above you. (" + ScoreSystem.getPoints(e.getGuild().getMemberById(rank.getAbove().getId())) + ")" :
+                rank.getAbove().getScore() != -1 ? e.getGuild().getMemberById(rank.getAbove().getUID()).getAsMention() + " is " + (rank.getAbove().getScore() - rank.getScore()) + " points above you. (" + ScoreSystem.getPoints(e.getGuild().getMemberById(rank.getAbove().getUID())) + ")" :
                         "You are on the top of the leaderboard. There is no-one above you :)", false);
 
         //Send the message
@@ -130,7 +121,7 @@ public class Commands {
         }
 
         //Make a Member object
-        Member toModify = null;
+        Member toModify;
 
         //Try to give toModify a value, if this fails, the uid given is wrong
         try {
@@ -157,6 +148,12 @@ public class Commands {
 
         //Execute the actual command requested
         if (args[1].equals("add")) {
+            //Check if the executor isn't adding negative score
+            if(Integer.parseInt(args[2]) < 0) {
+                e.getChannel().sendMessage("Can't add negative score. To remove points use the <remove> argument.").queue();
+                return false;
+            }
+
             //Add score to the user
             try {
                 ScoreSystem.addScore(toModify, Integer.parseInt(args[2]));
@@ -176,6 +173,12 @@ public class Commands {
                 //If the user's points will go below 0, cancel
                 if (ScoreSystem.getPoints(toModify) - Integer.parseInt(args[2]) < 0) {
                     e.getChannel().sendMessage("Unable to remove " + args[2] + " points from " + toModify.getEffectiveName() + ". Lowest score value is " + (Integer.parseInt(args[2]) - (26 - (ScoreSystem.getPoints(toModify) - Integer.parseInt(args[2]))))).queue();
+                    return false;
+                }
+
+                //Check if the executor isn't adding negative score
+                if(Integer.parseInt(args[2]) < 0) {
+                    e.getChannel().sendMessage("Can't remove negative score. To add points use the <add> argument.").queue();
                     return false;
                 }
 
@@ -222,7 +225,7 @@ public class Commands {
 
     public static boolean say(CommandEvent e, String[] args) {
         //Check if there are arguments
-        if (args.length == 0) {
+        if (args.length < 2) {
             Output.unknownArguments(e.getChannel(), "say", "say <message>");
             return false;
         }
@@ -236,9 +239,9 @@ public class Commands {
         //Add all the arguments together to make one string
         StringBuilder b = new StringBuilder();
 
-        for (String arg : args) {
-            b.append(arg + " ");
-        }
+        for(int i = 0; i < args.length; i++)
+            if(i != 0)
+                b.append(args[i]).append(" ");
 
         //Send the message
         String message = b.toString().trim();
@@ -264,19 +267,6 @@ public class Commands {
 
         //Send the embed
         e.getChannel().sendMessage(b.build()).queue();
-
-        return true;
-    }
-
-    public static boolean test(CommandEvent e, String[] args) {
-        //TEST COMMAND - This is for testing the bot. This is not visible in the help menu. Can only be executed by the owner of the bot
-        if (!e.getJDA().retrieveApplicationInfo().complete().getOwner().getId().equals(e.getMember().getId())) {
-            Output.noPermission(e.getChannel(), "test");
-            return false;
-        }
-
-        //Do the thing you want to test
-
 
         return true;
     }
@@ -351,10 +341,10 @@ public class Commands {
                     return false;
                 }
 
-                //Create an embedbuilder so we can make the message look nice
+                //Create an embed builder so we can make the message look nice
                 EmbedBuilder builder = new EmbedBuilder();
                 builder.setTitle("Config for " + Vars.botName);
-                builder.setColor(Vars.random.nextInt(0xFFFFFF));
+                builder.setColor(Util.random(0x000000, 0xFFFFFF));
 
                 //Fill in the embed builder
                 for (String line : lines) {
@@ -384,11 +374,11 @@ public class Commands {
         //Make the embed look good
         b.setTitle("Score Leaderboard");
         b.setFooter(Vars.botName + " made by " + Vars.botOwner);
-        b.setColor(Vars.random.nextInt(0xFFFFFF));
+        b.setColor(Util.random(0x000000, 0xFFFFFF));
 
         //Add all the users with their score to the leaderboard embed
         for (int i = 0; i < leaderboard.length; i++) {
-            String user = e.getGuild().getMemberById(leaderboard[i].getId()).getAsMention() + (leaderboard[i].getId().equalsIgnoreCase(e.getAuthor().getId()) ? " (you)" : "");
+            String user = e.getGuild().getMemberById(leaderboard[i].getUID()).getAsMention() + (leaderboard[i].getUID().equalsIgnoreCase(e.getAuthor().getId()) ? " (you)" : "");
             int difference = 0;
             boolean senderHasMorePoints;
             try {
@@ -398,7 +388,7 @@ public class Commands {
             }
             senderHasMorePoints = difference <= 0;
             difference = Math.abs(difference);
-            b.addField("#" + (i + 1), user + "\n__" + leaderboard[i].getScore() + "__ *(" + difference + " points " + (senderHasMorePoints ? "more" : "less") + " than you.)*", false);
+            b.addField("#" + (i + 1), user + "\n__" + leaderboard[i].getScore() + " points__ *(" + difference + " points " + (senderHasMorePoints ? "more" : "less") + " than you)*", false);
         }
 
         //Send the embed

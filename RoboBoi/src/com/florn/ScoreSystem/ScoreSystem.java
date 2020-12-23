@@ -1,8 +1,8 @@
 package com.florn.ScoreSystem;
 
-import com.florn.*;
 import com.florn.Config.BotSettings;
 import com.florn.Config.Range;
+import com.florn.*;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -12,15 +12,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class ScoreSystem {
     public static ArrayList<Member> hasSent = new ArrayList<>();
 
     //A thread that loops and gives users a random score if they sent a message in that time period
     public static void messageScoreThread() {
-        Random r = Vars.random;
-
         new Thread(() -> {
             //Loop while the thread isn't interrupted
             while (!Thread.interrupted()) {
@@ -179,7 +176,7 @@ public class ScoreSystem {
         return newList;
     }
 
-    public static void fixScoreList(Guild g) throws IOException {
+    public static void afixScoreList(Guild g) throws IOException {
         List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
 
         for (String line : lines) {
@@ -310,7 +307,7 @@ public class ScoreSystem {
 
     private static UserScore getUserScoreFromId(List<UserScore> array, String id) {
         for (UserScore score : array)
-            if (score.getId().equals(id))
+            if (score.getUID().equals(id))
                 return score;
 
         return new UserScore("Not Found", -1);
@@ -371,9 +368,7 @@ public class ScoreSystem {
 
         sorted = reverseUserScoreArray(sortUserScoreArray(scores));
 
-        for (int i = 0; i < 5; i++) {
-            leaderboard[i] = sorted[i];
-        }
+        System.arraycopy(sorted, 0, leaderboard, 0, 5);
 
         return leaderboard;
     }

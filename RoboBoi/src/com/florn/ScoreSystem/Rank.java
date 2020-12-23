@@ -2,22 +2,21 @@ package com.florn.ScoreSystem;
 
 //Just an easy class to transfer some user data about their rank
 public class Rank {
-    private final UserScore above;
-    private final UserScore below;
-    int totalMembers, position, topPercentage, score;
-    boolean higherPeeps, superPeeps;
-    double higherPeepsProgress, superPeepsProgress;
+    private final UserScore above, below;
+    private final int totalMembers, position, score;
+    private final boolean higherPeeps, superPeeps;
+    private final double higherPeepsProgress, superPeepsProgress;
 
-    public Rank(int _score, UserScore _above, UserScore _below, int _totalMembers, int _position, boolean _higherPeeps, boolean _superPeeps, double _higherPeepsProgress, double _superPeepsProgress) {
-        above = _above;
-        below = _below;
-        totalMembers = _totalMembers;
-        position = _position;
-        higherPeeps = _higherPeeps;
-        superPeeps = _superPeeps;
-        score = _score;
-        higherPeepsProgress = _higherPeepsProgress;
-        superPeepsProgress = _superPeepsProgress;
+    public Rank(int score, UserScore above, UserScore below, int totalMembers, int position, boolean higherPeeps, boolean superPeeps, double higherPeepsProgress, double superPeepsProgress) {
+        this.score = score;
+        this.above = above;
+        this.below = below;
+        this.totalMembers = totalMembers;
+        this.position = position;
+        this.higherPeeps = higherPeeps;
+        this.superPeeps = superPeeps;
+        this.higherPeepsProgress = higherPeepsProgress;
+        this.superPeepsProgress = superPeepsProgress;
     }
 
     public int getScore() {

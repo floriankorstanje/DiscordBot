@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 import java.io.IOException;
 
 public class CommandHandler extends ListenerAdapter {
-    private String[] reactions = {"✅", "👎", "❌"};
+    private final String[] reactions = {"✅", "👎", "❌"};
 
     @Override
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
@@ -25,8 +25,8 @@ public class CommandHandler extends ListenerAdapter {
         CommandEvent commandEvent = new CommandEvent(event);
 
         //Make sure the bot doesn't stack reactions
-        for(int i = 0; i < reactions.length; i++)
-            commandEvent.getMessage().removeReaction(reactions[i], commandEvent.getJDA().getSelfUser()).complete();
+        for (String reaction : reactions)
+            commandEvent.getMessage().removeReaction(reaction, commandEvent.getJDA().getSelfUser()).complete();
 
         HandleCommand(commandEvent);
     }
@@ -75,9 +75,6 @@ public class CommandHandler extends ListenerAdapter {
             } else if (cmd.equalsIgnoreCase("version")) {
                 //Command $version
                 success = Commands.version(event);
-            } else if (cmd.equalsIgnoreCase("test")) {
-                //Command $test
-                success = Commands.test(event, args);
             } else if (cmd.equalsIgnoreCase(("config"))) {
                 //Command $config
                 success = Commands.config(event, args);

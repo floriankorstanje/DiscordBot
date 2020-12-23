@@ -6,12 +6,12 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageUpdateEvent;
 
 public class CommandEvent {
-    private Guild guild;
-    private TextChannel channel;
-    private Member member;
-    private Message message;
-    private User author;
-    private JDA jda;
+    private final Guild guild;
+    private final TextChannel channel;
+    private final Member member;
+    private final Message message;
+    private final User author;
+    private final JDA jda;
 
     public CommandEvent(GuildMessageReceivedEvent eventMessage) {
         guild = eventMessage.getGuild();

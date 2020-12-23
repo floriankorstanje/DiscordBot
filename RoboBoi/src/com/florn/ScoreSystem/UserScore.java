@@ -2,18 +2,18 @@ package com.florn.ScoreSystem;
 
 public class UserScore {
     private final int score;
-    private final String id;
+    private final String uid;
 
-    public UserScore(String uid, int uscore) {
-        score = uscore;
-        id = uid;
+    public UserScore(String uid, int score) {
+        this.score = score;
+        this.uid = uid;
     }
 
     public int getScore() {
         return score;
     }
 
-    public String getId() {
-        return id;
+    public String getUID() {
+        return uid;
     }
 }
