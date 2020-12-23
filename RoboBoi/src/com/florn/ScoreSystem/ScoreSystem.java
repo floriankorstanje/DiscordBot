@@ -51,7 +51,7 @@ public class ScoreSystem {
                     Thread.sleep(BotSettings.getValueInt("give_call_points_delay"));
 
                     //If someone joined the AFK channel they will not gain points
-                    if (e.getChannelJoined().getId().equals(Vars.afkChannel))
+                    if (e.getChannelJoined().getId().equals(e.getGuild().getAfkChannel().getId()))
                         return;
 
                     //If the user left the voice channel the loop will stop

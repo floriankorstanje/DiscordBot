@@ -8,13 +8,14 @@ import java.util.Random;
 
 public class Vars {
     //Other
-    public static String scoreFile = System.getProperty("user.dir") + "/RoboBoi_Scores.txt";
-    public static String settingsFile = System.getProperty("user.dir") + "/RoboBoi_Settings.txt";
-    public static String authFile = System.getProperty("user.dir") + "/auth.txt";
+    public static String fileFolder = System.getProperty("user.dir") + "/Bot-Files";
+    public static String scoreFile = fileFolder + "/Scores.txt";
+    public static String settingsFile = fileFolder + "/Settings.txt";
+    public static String tokenFile = fileFolder + "/Token.txt";
     public static String botPrefix;
     public static Guild guild;
     public static Random random = new Random();
-    public static String version = "1.9.1_2";
+    public static String version = "1.10.0_1";
     public static Permission adminCommandPermission = Permission.MESSAGE_MANAGE;
     public static String joinMessage;
     public static String leaveMessage;
@@ -30,7 +31,6 @@ public class Vars {
 
     //Channel IDs
     public static String systemMessagesChannel;
-    public static String afkChannel;
     public static String botLogChannel;
     public static String rulesChannel;
 

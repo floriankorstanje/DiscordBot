@@ -28,10 +28,15 @@ public class Main {
     public static void main(String[] args) throws IOException, LoginException {
         System.out.println("Starting RoboBoi version " + Vars.version);
 
+        //Check if directory for files exists.
+        File folder = new File(Vars.fileFolder);
+        if(!folder.exists())
+            folder.mkdirs();
+
         //Check if settings file exists.
         if (!new File(Vars.settingsFile).exists()) {
             //Tell the user to first download a config file and set the bot up
-            System.out.println("UNABLE TO START BOT. NO CONFIG FILE WAS FOUND. PLEASE DOWNLOAD EXAMPLE CONFIG FILE AND PUT IT IN THE SAME DIRECTORY AS THE .jar OF THE BOT. CONFIG FILE EXAMPLE: http://fkorstanje.nl/aa/rb/RoboBoi_Settings.txt\nTHIS IS A ONE-TIME PROCESS, YOU CAN CHANGE THE CONFIG FILE WITH BOT COMMANDS AFTER THE FIRST RUN.\nFOR MORE HELP WITH THE CONFIG FILE, VISIT: http://fkorstanje.nl/aa/rb/RoboBoi-Help-ConfigCommand.txt");
+            System.out.println("Please visit http://fkorstanje.nl/aa/RoboBoi to set the bot up for first usage. You only need to do this once.");
             return;
         }
 
@@ -42,26 +47,19 @@ public class Main {
         }
 
         //Check if the authentication file exists
-        if (!new File(Vars.authFile).exists()) {
+        if (!new File(Vars.tokenFile).exists()) {
             //Create auth file and add a auth key to it
-            Files.createFile(Paths.get(Vars.authFile));
-
-            //Generate random hex string
-            String authKey = Util.generateCode(64);
+            Files.createFile(Paths.get(Vars.tokenFile));
 
             //Add the auth key to the file
             ArrayList<String> lines = new ArrayList<>();
-            lines.add(authKey);
+            lines.add("YOUR DISCORD BOT TOKEN HERE");
 
-            IO.writeSmallTextFile(lines, Vars.authFile);
+            IO.writeSmallTextFile(lines, Vars.tokenFile);
         }
 
-        //Get the bot token from my website
-        String code = IO.readSmallTextFile(Vars.authFile).get(0);
-        String token = IO.getPageContents(new URL("http://fkorstanje.mynetgear.com/aa/BotToken.php?code=" + code));
-
-        System.out.println("Code: " + code);
-        System.out.println("Token: " + token);
+        //Get the bot token from the auth file (which is ignored by github)
+        String token = IO.readSmallTextFile(Vars.tokenFile).get(0);
 
         //Initialize the client with the bot token
         jda = new JDABuilder().setToken(token).build();
@@ -126,7 +124,6 @@ public class Main {
                     //Set the variables from the settings file
                     Vars.botPrefix = BotSettings.getValueString("bot_prefix");
                     Vars.systemMessagesChannel = BotSettings.getValueString("system_messages_channel");
-                    Vars.afkChannel = BotSettings.getValueString("afk_channel");
                     Vars.botLogChannel = BotSettings.getValueString("bot_log_channel");
                     Vars.rulesChannel = BotSettings.getValueString("rules_channel");
                     Vars.ruleAcceptMessage = BotSettings.getValueString("rule_accept_message");
@@ -140,8 +137,8 @@ public class Main {
                     Vars.roleGetMessage = BotSettings.getValueString("role_get_message");
                     Vars.boostMessage = BotSettings.getValueString("boost_message");
 
-                    //Wait 2.5s
-                    Thread.sleep(2500);
+                    //Wait 5s
+                    Thread.sleep(5000);
                 } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
                 }
