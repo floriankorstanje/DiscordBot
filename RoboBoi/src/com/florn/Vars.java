@@ -15,7 +15,7 @@ public class Vars {
     public static String botPrefix;
     public static Guild guild;
     public static Random random = new Random();
-    public static String version = "1.10.0_1";
+    public static String version = "1.10.1_0";
     public static Permission adminCommandPermission = Permission.MESSAGE_MANAGE;
     public static String joinMessage;
     public static String leaveMessage;
@@ -38,7 +38,6 @@ public class Vars {
     public static String ruleAcceptMessage;
 
     //Role IDs
-    public static String normalPeopleRole;
     public static String higherPeopleRole;
     public static String superPeopleRole;
 }

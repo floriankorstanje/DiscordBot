@@ -127,7 +127,6 @@ public class Main {
                     Vars.botLogChannel = BotSettings.getValueString("bot_log_channel");
                     Vars.rulesChannel = BotSettings.getValueString("rules_channel");
                     Vars.ruleAcceptMessage = BotSettings.getValueString("rule_accept_message");
-                    Vars.normalPeopleRole = BotSettings.getValueString("normal_people_role");
                     Vars.higherPeopleRole = BotSettings.getValueString("higher_people_role");
                     Vars.superPeopleRole = BotSettings.getValueString("super_people_role");
                     Vars.joinMessage = BotSettings.getValueString("join_message");

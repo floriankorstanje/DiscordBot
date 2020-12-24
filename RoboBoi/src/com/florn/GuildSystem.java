@@ -32,15 +32,6 @@ public class GuildSystem extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(@Nonnull GuildMemberJoinEvent event) {
-            //Give the joined user a role if they have accepted the rules previously
-            List<User> reactions = event.getGuild().getTextChannelById(Vars.rulesChannel).retrieveMessageById(Vars.ruleAcceptMessage).complete().getReactions().get(0).retrieveUsers().complete();
-            for (User user : reactions) {
-                if (user.getId().equals(event.getMember().getId())) {
-                    Role role = event.getGuild().getRoleById(Vars.normalPeopleRole);
-                    event.getGuild().addRoleToMember(event.getMember().getId(), role).complete();
-                }
-            }
-
         //Announce user join
         event.getGuild().getTextChannelById(Vars.systemMessagesChannel).sendMessage(getMessage(Vars.joinMessage,
                 event.getMember().getEffectiveName(),
@@ -104,24 +95,6 @@ public class GuildSystem extends ListenerAdapter {
                 "#" + event.getGuild().getGuildChannelById(Vars.rulesChannel).getName(),
                 ""))
                 .queue();
-    }
-
-    @Override
-    public void onGuildMessageReactionAdd(@Nonnull GuildMessageReactionAddEvent event) {
-        //Add role to user
-        if (event.getMessageId().equals(Vars.ruleAcceptMessage)) {
-            Role role = event.getGuild().getRoleById(Vars.normalPeopleRole);
-            event.getGuild().addRoleToMember(event.getMember().getId(), role).complete();
-        }
-    }
-
-    @Override
-    public void onGuildMessageReactionRemove(@Nonnull GuildMessageReactionRemoveEvent event) {
-        //Remove role from user
-        if (event.getMessageId().equals(Vars.ruleAcceptMessage)) {
-            Role role = event.getGuild().getRoleById(Vars.normalPeopleRole);
-            event.getGuild().removeRoleFromMember(event.getMember().getId(), role).complete();
-        }
     }
 
     private static String getMessage(String settingValue, String userName, String userMention, String serverName, String rulesChannel, String roleName) {
