@@ -92,7 +92,6 @@ public class ScoreSystem {
         List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
 
         //Put all the roles in an easy Role object
-        Role normalPeeps = g.getRoleById(Vars.normalPeopleRole);
         Role higherPeeps = g.getRoleById(Vars.higherPeopleRole);
         Role superPeeps = g.getRoleById(Vars.superPeopleRole);
 
@@ -112,18 +111,6 @@ public class ScoreSystem {
                 //Remove all the higher roles since the user doesn't have the score for them anymore
                 g.removeRoleFromMember(m, higherPeeps).complete();
                 g.removeRoleFromMember(m, superPeeps).complete();
-
-                //If the user has between 25 and 500 points, they get normal peeps
-                if (!hasRole(m, normalPeeps)) {
-                    //Add the normal peeps role
-                    g.addRoleToMember(m, normalPeeps).complete();
-
-                    //Announce that the user got a new role
-                    GuildSystem.announceUserNewRole(m, normalPeeps, g);
-
-                    //Output to console
-                    Output.ConsoleLog("UpdateRank", m, "\"" + normalPeeps.getName() + "\"");
-                }
             } else if (score <= superPeopleScore) {
                 //Remove super peeps since the user doesn't have the score for it anymore
                 g.removeRoleFromMember(m, superPeeps).complete();
@@ -131,7 +118,6 @@ public class ScoreSystem {
                 //If the user has between 500 and 2000 points, they get higher peeps
                 if (!hasRole(m, higherPeeps)) {
                     //Add the normal and higher peeps role
-                    g.addRoleToMember(m, normalPeeps).complete();
                     g.addRoleToMember(m, higherPeeps).complete();
 
                     //Announce that the user got a new role
@@ -147,7 +133,6 @@ public class ScoreSystem {
                     //No roles to remove since the user gets the highest role available
 
                     //Add all the roles
-                    g.addRoleToMember(m, normalPeeps).complete();
                     g.addRoleToMember(m, higherPeeps).complete();
                     g.addRoleToMember(m, superPeeps).complete();
 
