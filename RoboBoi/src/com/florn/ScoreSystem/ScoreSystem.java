@@ -160,30 +160,7 @@ public class ScoreSystem {
 
         return newList;
     }
-
-    public static void afixScoreList(Guild g) throws IOException {
-        List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
-
-        for (String line : lines) {
-            if (lines.indexOf(line) != 0) {
-                try {
-                    g.getMemberById(line.split(":")[0]).getAsMention();
-                } catch (Exception ignored) {
-                    removeUserId(line.split(":")[0]);
-                    removeUserId(line.split(":")[0]);
-                }
-            }
-        }
-
-        for (Member m : g.getMembers()) {
-            try {
-                addScore(m, 0);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
+    
     public static void removeUserId(String uid) throws IOException {
         //Remove someone's ID from the score list, so if they leave the server and then join back they have 0 points
         List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
