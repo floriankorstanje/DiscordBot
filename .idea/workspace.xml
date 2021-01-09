@@ -8,13 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="536fb2c5-110a-41c4-9ded-94ef024cf592" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/flornian/Commands/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/src/com/flornian/Commands/CommandHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/flornian/Commands/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/src/com/flornian/Commands/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/flornian/GuildSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/src/com/flornian/GuildSystem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/flornian/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/src/com/flornian/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/flornian/ScoreSystem/ScoreSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/src/com/flornian/ScoreSystem/ScoreSystem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/flornian/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/src/com/flornian/Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/flornian/Vars.java" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/src/com/flornian/Vars.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,5 +81,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

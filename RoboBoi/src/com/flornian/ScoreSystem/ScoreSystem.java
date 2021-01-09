@@ -84,6 +84,9 @@ public class ScoreSystem {
     }
 
     public static void updateUserRole(Member m, Guild g) throws IOException {
+        if(!Vars.enableScoreSystem)
+            return;
+
         //Don't do anything if the member is a bot
         if (m.getUser().isBot())
             return;
