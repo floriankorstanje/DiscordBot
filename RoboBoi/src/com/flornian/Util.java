@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class Util {
     public static String[] removeTheElement(String[] arr, int index) {
         //If array is empty or the index doesn't exist, return the original array
-        if (arr == null  || index < 0  || index >= arr.length)
+        if (arr == null || index < 0 || index >= arr.length)
             return arr;
 
         //Create new array

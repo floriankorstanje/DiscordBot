@@ -32,7 +32,7 @@ public class Main {
 
         //Check if directory for files exists.
         File folder = new File(Vars.fileFolder);
-        if(!folder.exists())
+        if (!folder.exists())
             folder.mkdirs();
 
         //Check if settings file exists.

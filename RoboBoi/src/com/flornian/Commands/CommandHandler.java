@@ -75,7 +75,7 @@ public class CommandHandler extends ListenerAdapter {
             } else if (cmd.equalsIgnoreCase("leaderboard")) {
                 //Command $leaderboard
                 errcode = Commands.leaderboard(event);
-            } else if(cmd.equalsIgnoreCase("userinfo")) {
+            } else if (cmd.equalsIgnoreCase("userinfo")) {
                 //Command $userinfo
                 errcode = Commands.userinfo(event, args);
             } else {
@@ -86,7 +86,7 @@ public class CommandHandler extends ListenerAdapter {
 
             //Log the command, tell the user if the command succeeded or not and output to console
             Output.Log(cmd, originalMessage, event.getMember(), event.getChannel(), recognized, errcode);
-            if(errcode != 0)
+            if (errcode != 0)
                 event.getChannel().sendMessage("An error occurred while processing your command: " + Output.getError(errcode)).queue();
             Output.ConsoleLog("Command", event.getMember(), "\"$" + cmd + " [" + args.length + "]\"");
         }

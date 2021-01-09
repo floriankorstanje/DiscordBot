@@ -3,11 +3,11 @@ package com.flornian.Commands;
 import com.flornian.Config.BotSettings;
 import com.flornian.IO;
 import com.flornian.Output;
-import com.flornian.Util;
-import com.flornian.Vars;
 import com.flornian.ScoreSystem.Rank;
 import com.flornian.ScoreSystem.ScoreSystem;
 import com.flornian.ScoreSystem.UserScore;
+import com.flornian.Util;
+import com.flornian.Vars;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -44,7 +44,7 @@ public class Commands {
     }
 
     public static int Score(CommandEvent e, String[] args) throws IOException {
-        if(!Vars.enableScoreSystem)
+        if (!Vars.enableScoreSystem)
             return Output.functionDisabled();
 
         //Get some basic variables needed for the command
@@ -82,7 +82,7 @@ public class Commands {
         b.setColor(Util.random(0x0, 0xFFFFFF));
 
         //Get the selected user's rank
-        Rank rank = com.flornian.ScoreSystem.ScoreSystem.getRank(m, e.getGuild());
+        Rank rank = ScoreSystem.getRank(m, e.getGuild());
 
         //Add all the fields of the embed builder
         b.addField("User", m.getAsMention(), false);
@@ -97,11 +97,11 @@ public class Commands {
         b.addField("Rank", rank.getPosition() + " out of " + rank.getTotalMembers() + "\nTop " + rank.getTopPercentage() + "%", false);
 
         b.addField("Below you",
-                rank.getBelow().getScore() != -1 ? e.getGuild().getMemberById(rank.getBelow().getUID()).getAsMention() + " is " + (rank.getScore() - rank.getBelow().getScore()) + " points below you. (" + com.flornian.ScoreSystem.ScoreSystem.getPoints(e.getGuild().getMemberById(rank.getBelow().getUID())) + ")" :
+                rank.getBelow().getScore() != -1 ? e.getGuild().getMemberById(rank.getBelow().getUID()).getAsMention() + " is " + (rank.getScore() - rank.getBelow().getScore()) + " points below you. (" + ScoreSystem.getPoints(e.getGuild().getMemberById(rank.getBelow().getUID())) + ")" :
                         "You are on the bottom of the leaderboard. There is no-one below you :(", false);
 
         b.addField("Above you",
-                rank.getAbove().getScore() != -1 ? e.getGuild().getMemberById(rank.getAbove().getUID()).getAsMention() + " is " + (rank.getAbove().getScore() - rank.getScore()) + " points above you. (" + com.flornian.ScoreSystem.ScoreSystem.getPoints(e.getGuild().getMemberById(rank.getAbove().getUID())) + ")" :
+                rank.getAbove().getScore() != -1 ? e.getGuild().getMemberById(rank.getAbove().getUID()).getAsMention() + " is " + (rank.getAbove().getScore() - rank.getScore()) + " points above you. (" + ScoreSystem.getPoints(e.getGuild().getMemberById(rank.getAbove().getUID())) + ")" :
                         "You are on the top of the leaderboard. There is no-one above you :)", false);
 
         //Send the message
@@ -111,7 +111,7 @@ public class Commands {
     }
 
     public static int modScore(CommandEvent e, String[] args) {
-        if(!Vars.enableScoreSystem)
+        if (!Vars.enableScoreSystem)
             return Output.functionDisabled();
 
         //Check if the user has permissions to execute this command
@@ -154,14 +154,14 @@ public class Commands {
 
             //Add score to the user
             try {
-                com.flornian.ScoreSystem.ScoreSystem.addScore(toModify, Integer.parseInt(args[2]));
+                ScoreSystem.addScore(toModify, Integer.parseInt(args[2]));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
 
             //Send a message that the user got points
             try {
-                e.getChannel().sendMessage(e.getMember().getAsMention() + " added " + args[2] + " to " + toModify.getAsMention() + "'s score (Now " + com.flornian.ScoreSystem.ScoreSystem.getPoints(toModify) + ").").queue();
+                e.getChannel().sendMessage(e.getMember().getAsMention() + " added " + args[2] + " to " + toModify.getAsMention() + "'s score (Now " + ScoreSystem.getPoints(toModify) + ").").queue();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -169,19 +169,19 @@ public class Commands {
             //Remove the points
             try {
                 //If the user's points will go below 0, cancel
-                if (com.flornian.ScoreSystem.ScoreSystem.getPoints(toModify) - Integer.parseInt(args[2]) < 0) {
-                    e.getChannel().sendMessage("Unable to remove " + args[2] + " points from " + toModify.getEffectiveName() + ". Lowest score value is " + (Integer.parseInt(args[2]) - (26 - (com.flornian.ScoreSystem.ScoreSystem.getPoints(toModify) - Integer.parseInt(args[2]))))).queue();
+                if (ScoreSystem.getPoints(toModify) - Integer.parseInt(args[2]) < 0) {
+                    e.getChannel().sendMessage("Unable to remove " + args[2] + " points from " + toModify.getEffectiveName() + ". Lowest score value is " + (Integer.parseInt(args[2]) - (26 - (ScoreSystem.getPoints(toModify) - Integer.parseInt(args[2]))))).queue();
                     return -1;
                 }
 
                 //Check if the executor isn't adding negative score
-                if(Integer.parseInt(args[2]) < 0) {
+                if (Integer.parseInt(args[2]) < 0) {
                     e.getChannel().sendMessage("Can't remove negative score. To add points use the <add> argument.").queue();
                     return -1;
                 }
 
                 //Add negative points
-                com.flornian.ScoreSystem.ScoreSystem.addScore(toModify, -Integer.parseInt(args[2]));
+                ScoreSystem.addScore(toModify, -Integer.parseInt(args[2]));
             } catch (IOException ex) {
                 ex.printStackTrace();
                 return -1;
@@ -189,7 +189,7 @@ public class Commands {
 
             //Send a message that points have been removed from the user
             try {
-                e.getChannel().sendMessage(e.getMember().getAsMention() + " removed " + args[2] + " from " + toModify.getAsMention() + "'s score (Now " + com.flornian.ScoreSystem.ScoreSystem.getPoints(toModify) + ").").queue();
+                e.getChannel().sendMessage(e.getMember().getAsMention() + " removed " + args[2] + " from " + toModify.getAsMention() + "'s score (Now " + ScoreSystem.getPoints(toModify) + ").").queue();
             } catch (IOException ex) {
                 ex.printStackTrace();
                 return -1;
@@ -203,7 +203,7 @@ public class Commands {
 
             //Calculate the amount of points to add/remove from the user to set the right score
             try {
-                com.flornian.ScoreSystem.ScoreSystem.addScore(toModify, Integer.parseInt(args[2]) - com.flornian.ScoreSystem.ScoreSystem.getPoints(toModify));
+                ScoreSystem.addScore(toModify, Integer.parseInt(args[2]) - ScoreSystem.getPoints(toModify));
             } catch (IOException ex) {
                 ex.printStackTrace();
                 return -1;
@@ -211,7 +211,7 @@ public class Commands {
 
             //Send a message that the points of the user have been modified
             try {
-                e.getChannel().sendMessage(e.getMember().getAsMention() + " set " + toModify.getAsMention() + "'s score to " + com.flornian.ScoreSystem.ScoreSystem.getPoints(toModify) + ".").queue();
+                e.getChannel().sendMessage(e.getMember().getAsMention() + " set " + toModify.getAsMention() + "'s score to " + ScoreSystem.getPoints(toModify) + ".").queue();
             } catch (IOException ex) {
                 ex.printStackTrace();
                 return -1;
@@ -235,7 +235,7 @@ public class Commands {
         //Add all the arguments together to make one string
         StringBuilder b = new StringBuilder();
 
-        for(int i = 1; i < args.length; i++)
+        for (int i = 1; i < args.length; i++)
             b.append(args[i]).append(" ");
 
         //Send the message
@@ -352,13 +352,13 @@ public class Commands {
     }
 
     public static int leaderboard(CommandEvent e) {
-        if(!Vars.enableScoreSystem)
+        if (!Vars.enableScoreSystem)
             return Output.functionDisabled();
 
         EmbedBuilder b = new EmbedBuilder();
-        com.flornian.ScoreSystem.UserScore[] leaderboard = new UserScore[0];
+        UserScore[] leaderboard = new UserScore[0];
         try {
-            leaderboard = com.flornian.ScoreSystem.ScoreSystem.getLeaderboard();
+            leaderboard = ScoreSystem.getLeaderboard();
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
@@ -390,19 +390,19 @@ public class Commands {
     }
 
     public static int userinfo(CommandEvent e, String[] args) {
-        if(args.length > 1)
+        if (args.length > 1)
             return Output.unknownArguments();
 
         Member member = e.getMember();
 
-        if(args.length == 1) {
+        if (args.length == 1) {
             try {
                 member = e.getGuild().getMemberById(args[0]);
             } catch (Exception exception) {
                 return Output.unknownUid();
             }
 
-            if(member == null)
+            if (member == null)
                 return Output.unknownUid();
         }
 
@@ -423,8 +423,8 @@ public class Commands {
         //Get list of all the roles the user has and put them in a string
         StringBuilder b = new StringBuilder();
         List<Role> roles = member.getRoles();
-        for(int i = 0; i < roles.size(); i++)
-            if(i == roles.size() - 1)
+        for (int i = 0; i < roles.size(); i++)
+            if (i == roles.size() - 1)
                 b.append(roles.get(i).getAsMention());
             else
                 b.append(roles.get(i).getAsMention()).append(", ");

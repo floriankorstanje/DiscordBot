@@ -201,7 +201,7 @@ public class ScoreSystem {
 
     public static void addScore(Member m, int score) throws IOException {
         //Don't add score if score system is disabled
-        if(!Vars.enableScoreSystem)
+        if (!Vars.enableScoreSystem)
             return;
 
         //Check if member is a bot, if so, don't update score

@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class GuildSystem extends ListenerAdapter {
     public static void announceUserNewRole(Member m, Role r, Guild g) {
-        if(!com.flornian.Vars.enableSystemMessages)
+        if (!com.flornian.Vars.enableSystemMessages)
             return;
 
         //Announce user new role
@@ -30,7 +30,7 @@ public class GuildSystem extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(@Nonnull GuildMemberJoinEvent event) {
-        if(!com.flornian.Vars.enableSystemMessages)
+        if (!com.flornian.Vars.enableSystemMessages)
             return;
 
         //Announce user join
@@ -51,7 +51,7 @@ public class GuildSystem extends ListenerAdapter {
             e.printStackTrace();
         }
 
-        if(!com.flornian.Vars.enableSystemMessages)
+        if (!com.flornian.Vars.enableSystemMessages)
             return;
 
         //Announce user leave
@@ -65,7 +65,7 @@ public class GuildSystem extends ListenerAdapter {
 
     @Override
     public void onGuildBan(@Nonnull GuildBanEvent event) {
-        if(!com.flornian.Vars.enableSystemMessages)
+        if (!com.flornian.Vars.enableSystemMessages)
             return;
 
         //Announce user ban
@@ -79,7 +79,7 @@ public class GuildSystem extends ListenerAdapter {
 
     @Override
     public void onGuildUnban(@Nonnull GuildUnbanEvent event) {
-        if(!com.flornian.Vars.enableSystemMessages)
+        if (!com.flornian.Vars.enableSystemMessages)
             return;
 
         //Announce user unban
@@ -93,7 +93,7 @@ public class GuildSystem extends ListenerAdapter {
 
     @Override
     public void onGuildMemberUpdateBoostTime(@Nonnull GuildMemberUpdateBoostTimeEvent event) {
-        if(!com.flornian.Vars.enableSystemMessages)
+        if (!com.flornian.Vars.enableSystemMessages)
             return;
 
         //Announce user boost
