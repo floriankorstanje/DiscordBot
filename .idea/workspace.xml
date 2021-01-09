@@ -7,82 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="536fb2c5-110a-41c4-9ded-94ef024cf592" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/RoboBoi_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/RoboBoi_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/discord.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/JDA_4_1_0_84_withDependencies.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/RoboBoi.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/RoboBoi.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bot-Files/Scores.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Bot-Files/Scores.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bot-Files/Settings.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Bot-Files/Settings.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/.idea/artifacts/RoboBoi_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/.idea/artifacts/RoboBoi_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/.idea/discord.xml" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/.idea/discord.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/.idea/libraries/JDA_4_1_0_84_withDependencies.xml" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/.idea/libraries/JDA_4_1_0_84_withDependencies.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/.idea/libraries/RoboBoi.xml" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/.idea/libraries/RoboBoi.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/.idea/project-template.xml" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/.idea/project-template.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/JDA-4.1.0_84-withDependencies.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/RoboBoi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/RoboBoi.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/artifacts/RoboBoi_jar/RoboBoi.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/META-INF/RoboBoi.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/com/florn/Commands/CommandHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/com/florn/Commands/Commands.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/com/florn/Config/BotSettings$Result.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/com/florn/Config/BotSettings.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/com/florn/Config/Range.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/com/florn/GuildSystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/com/florn/IO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/com/florn/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/com/florn/Output.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/com/florn/ScoreSystem/AddScoreEvents.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/com/florn/ScoreSystem/Rank.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/com/florn/ScoreSystem/ScoreSystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/com/florn/ScoreSystem/UserScore.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/com/florn/Util.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/out/production/RoboBoi/com/florn/Vars.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/src/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/florn/Commands/CommandEvent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/florn/Commands/CommandHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/florn/Commands/Commands.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/florn/Config/BotSettings.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/florn/Config/Range.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/florn/GuildSystem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/florn/IO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/florn/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/florn/Output.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/florn/ScoreSystem/AddScoreEvents.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/florn/ScoreSystem/Rank.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/florn/ScoreSystem/ScoreSystem.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/florn/ScoreSystem/UserScore.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/florn/Util.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/florn/Vars.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RoboBoi/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/Commands/CommandEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/Commands/CommandHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/Commands/Commands.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/Config/BotSettings$Result.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/Config/BotSettings.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/Config/Range.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/GuildSystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/IO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/Output.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/ScoreSystem/AddScoreEvents.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/ScoreSystem/Rank.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/ScoreSystem/ScoreSystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/ScoreSystem/UserScore.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/Util.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RoboBoi/com/florn/Vars.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/flornian/ScoreSystem/ScoreSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/src/com/flornian/ScoreSystem/ScoreSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RoboBoi/src/com/flornian/Vars.java" beforeDir="false" afterPath="$PROJECT_DIR$/RoboBoi/src/com/flornian/Vars.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

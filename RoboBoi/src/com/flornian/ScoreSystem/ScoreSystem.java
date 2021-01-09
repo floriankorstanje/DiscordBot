@@ -3,6 +3,7 @@ package com.flornian.ScoreSystem;
 import com.flornian.Config.BotSettings;
 import com.flornian.Config.Range;
 import com.flornian.GuildSystem;
+import com.flornian.Vars;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -199,6 +200,10 @@ public class ScoreSystem {
     }
 
     public static void addScore(Member m, int score) throws IOException {
+        //Don't add score if score system is disabled
+        if(!Vars.enableScoreSystem)
+            return;
+
         //Check if member is a bot, if so, don't update score
         if (m.getUser().isBot())
             return;
