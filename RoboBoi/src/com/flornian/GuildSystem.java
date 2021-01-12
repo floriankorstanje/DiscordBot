@@ -45,13 +45,6 @@ public class GuildSystem extends ListenerAdapter {
 
     @Override
     public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
-        try {
-            //Reset users score when they leave
-            ScoreSystem.resetUserScore(event.getMember().getId());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         if (!Vars.enableSystemMessages)
             return;
 
