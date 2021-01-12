@@ -6,7 +6,6 @@ import com.flornian.Output;
 import com.flornian.ScoreSystem.Rank;
 import com.flornian.ScoreSystem.ScoreSystem;
 import com.flornian.ScoreSystem.UserScore;
-import com.flornian.Util;
 import com.flornian.Vars;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
@@ -24,7 +23,7 @@ public class Commands {
         //Add basic stuff to the embed
         builder.setTitle("Help for " + Vars.botName + " v" + Vars.version);
         builder.setFooter(Vars.botName + " made by " + Vars.botOwner);
-        builder.setColor(Util.random(0x000000, 0xFFFFFF));
+        builder.setColor(e.getMember().getColor());
         builder.addField("[] - Optional argument; <> - Required argument", "", false);
 
         //Add all the commands
@@ -79,7 +78,7 @@ public class Commands {
         b.setFooter(Vars.botName + " made by " + Vars.botOwner);
 
         //Set a random color for the embed
-        b.setColor(Util.random(0x0, 0xFFFFFF));
+        b.setColor(e.getMember().getColor());
 
         //Get the selected user's rank
         Rank rank = ScoreSystem.getRank(m, e.getGuild());
@@ -232,6 +231,9 @@ public class Commands {
             return Output.noPermission();
         }
 
+        //Delete the command message
+        e.getMessage().delete().complete();
+
         //Add all the arguments together to make one string
         StringBuilder b = new StringBuilder();
 
@@ -252,7 +254,7 @@ public class Commands {
 
         //Make an embed and make it look nice
         EmbedBuilder b = new EmbedBuilder();
-        b.setColor(Util.random(0x0, 0xFFFFFF));
+        b.setColor(e.getMember().getColor());
         b.setTitle(e.getJDA().getSelfUser().getName() + " Version");
         b.setFooter(Vars.botName + " made by " + Vars.botOwner);
 
@@ -333,7 +335,7 @@ public class Commands {
                 //Create an embed builder so we can make the message look nice
                 EmbedBuilder builder = new EmbedBuilder();
                 builder.setTitle("Config for " + Vars.botName);
-                builder.setColor(Util.random(0x000000, 0xFFFFFF));
+                builder.setColor(e.getMember().getColor());
 
                 //Fill in the embed builder
                 for (String line : lines) {
@@ -366,7 +368,7 @@ public class Commands {
         //Make the embed look good
         b.setTitle("Score Leaderboard");
         b.setFooter(Vars.botName + " made by " + Vars.botOwner);
-        b.setColor(Util.random(0x000000, 0xFFFFFF));
+        b.setColor(e.getMember().getColor());
 
         //Add all the users with their score to the leaderboard embed
         for (int i = 0; i < leaderboard.length; i++) {
@@ -427,7 +429,7 @@ public class Commands {
             if (i == roles.size() - 1)
                 b.append(roles.get(i).getAsMention());
             else
-                b.append(roles.get(i).getAsMention()).append(", ");
+                b.append(roles.get(i).getAsMention()).append(" ");
 
         builder.addField("Roles", b.toString(), false);
 

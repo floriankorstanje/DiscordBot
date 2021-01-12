@@ -2,8 +2,7 @@ package com.flornian.ScoreSystem;
 
 import com.flornian.Config.BotSettings;
 import com.flornian.Config.Range;
-import com.flornian.GuildSystem;
-import com.flornian.Vars;
+import com.flornian.*;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -31,8 +30,8 @@ public class ScoreSystem {
                     if (hasSent != null) {
                         for (Member m : hasSent) {
                             Range rRange = BotSettings.getValueRange("random_points_per_message");
-                            addScore(m, com.flornian.Util.random(rRange.getMin(), rRange.getMax()));
-                            updateUserRole(m, com.flornian.Vars.guild);
+                            addScore(m, Util.random(rRange.getMin(), rRange.getMax()));
+                            updateUserRole(m, Vars.guild);
                         }
                     }
 
@@ -84,7 +83,7 @@ public class ScoreSystem {
     }
 
     public static void updateUserRole(Member m, Guild g) throws IOException {
-        if(!Vars.enableScoreSystem)
+        if (!Vars.enableScoreSystem)
             return;
 
         //Don't do anything if the member is a bot
@@ -93,11 +92,11 @@ public class ScoreSystem {
 
         //Get the basic information about someone's score
         int userLine = getUserLine(m.getId());
-        List<String> lines = com.flornian.IO.readSmallTextFile(com.flornian.Vars.scoreFile);
+        List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
 
         //Put all the roles in an easy Role object
-        Role higherPeeps = g.getRoleById(com.flornian.Vars.higherPeopleRole);
-        Role superPeeps = g.getRoleById(com.flornian.Vars.superPeopleRole);
+        Role higherPeeps = g.getRoleById(Vars.higherPeopleRole);
+        Role superPeeps = g.getRoleById(Vars.superPeopleRole);
 
         //Get the scores required for the user to get a new role
         int higherPeopleSocre = BotSettings.getValueInt("higher_people_points");
@@ -125,10 +124,10 @@ public class ScoreSystem {
                     g.addRoleToMember(m, higherPeeps).complete();
 
                     //Announce that the user got a new role
-                    com.flornian.GuildSystem.announceUserNewRole(m, higherPeeps, g);
+                    GuildSystem.announceUserNewRole(m, higherPeeps, g);
 
                     //Output to console
-                    com.flornian.Output.ConsoleLog("UpdateRank", m, "\"" + higherPeeps.getName() + "\"");
+                    Output.ConsoleLog("UpdateRank", m, "\"" + higherPeeps.getName() + "\"");
                 }
             } else {
                 //If the user has more than 2000 points, they get super peeps
@@ -144,7 +143,7 @@ public class ScoreSystem {
                     GuildSystem.announceUserNewRole(m, superPeeps, g);
 
                     //Output to console
-                    com.flornian.Output.ConsoleLog("UpdateRank", m, "\"" + superPeeps.getName() + "\"");
+                    Output.ConsoleLog("UpdateRank", m, "\"" + superPeeps.getName() + "\"");
                 }
             }
         }
@@ -167,22 +166,22 @@ public class ScoreSystem {
 
     public static void removeUserId(String uid) throws IOException {
         //Remove someone's ID from the score list, so if they leave the server and then join back they have 0 points
-        List<String> lines = com.flornian.IO.readSmallTextFile(com.flornian.Vars.scoreFile);
+        List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
         lines.remove(getUserLine(uid));
-        com.flornian.IO.writeSmallTextFile(lines, com.flornian.Vars.scoreFile);
+        IO.writeSmallTextFile(lines, Vars.scoreFile);
     }
 
     public static void resetUserScore(String uid) throws IOException {
         //Set the users score back to 25
-        List<String> lines = com.flornian.IO.readSmallTextFile(com.flornian.Vars.scoreFile);
+        List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
         lines.set(getUserLine(uid), uid + ":" + 25);
-        com.flornian.IO.writeSmallTextFile(lines, com.flornian.Vars.scoreFile);
+        IO.writeSmallTextFile(lines, Vars.scoreFile);
     }
 
     private static int getUserLine(String uid) {
         try {
             //Get all the lines in the file
-            List<String> lines = com.flornian.IO.readSmallTextFile(com.flornian.Vars.scoreFile);
+            List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
 
             //Loop through all the lines and see if it matches the given UID
             for (int i = 0; i < lines.size(); i++) {
@@ -213,7 +212,7 @@ public class ScoreSystem {
 
         //Read the file with all the user scores
         int userLine = getUserLine(m.getId());
-        List<String> lines = com.flornian.IO.readSmallTextFile(com.flornian.Vars.scoreFile);
+        List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
 
         //Update score, if user isn't in the file yet, create the line
         if (userLine == -1) {
@@ -226,31 +225,31 @@ public class ScoreSystem {
         }
 
         //Write the new contents to the score file
-        com.flornian.IO.writeSmallTextFile(lines, com.flornian.Vars.scoreFile);
+        IO.writeSmallTextFile(lines, Vars.scoreFile);
 
         //Output to console
-        com.flornian.Output.ConsoleLog("AddScore", m, String.format("%02d", score));
+        Output.ConsoleLog("AddScore", m, String.format("%02d", score));
     }
 
-    public static com.flornian.ScoreSystem.Rank getRank(Member m, Guild g) throws IOException {
-        List<String> lines = com.flornian.IO.readSmallTextFile(com.flornian.Vars.scoreFile);
-        List<com.flornian.ScoreSystem.UserScore> userScores = new ArrayList<>();
+    public static Rank getRank(Member m, Guild g) throws IOException {
+        List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
+        List<UserScore> userScores = new ArrayList<>();
 
         //Put all the users and their scores in an UserScore array
         for (String line : lines) {
             String[] splitLine = line.split(":");
             String uid = splitLine[0];
             int score = Integer.parseInt(splitLine[1]);
-            userScores.add(new com.flornian.ScoreSystem.UserScore(uid, score));
+            userScores.add(new UserScore(uid, score));
         }
 
         //Sort and reverse the UserScore array (and a lot of array conversion)
-        userScores = Arrays.asList(reverseUserScoreArray(sortUserScoreArray(userScores.toArray(new com.flornian.ScoreSystem.UserScore[0]))));
+        userScores = Arrays.asList(reverseUserScoreArray(sortUserScoreArray(userScores.toArray(new UserScore[0]))));
 
         //Get rank, person below and person above from sorted array
         int rank = userScores.indexOf(getUserScoreFromId(userScores, m.getId()));
-        com.flornian.ScoreSystem.UserScore scoreBelow = new com.flornian.ScoreSystem.UserScore("Not Found", -1);
-        com.flornian.ScoreSystem.UserScore scoreAbove = new com.flornian.ScoreSystem.UserScore("Not Found", -1);
+        UserScore scoreBelow = new UserScore("Not Found", -1);
+        UserScore scoreAbove = new UserScore("Not Found", -1);
 
         try {
             scoreBelow = userScores.get(rank + 1);
@@ -259,7 +258,7 @@ public class ScoreSystem {
         }
 
         //Get the person who requested his score his UserScore
-        com.flornian.ScoreSystem.UserScore requester = getUserScoreFromId(userScores, m.getId());
+        UserScore requester = getUserScoreFromId(userScores, m.getId());
 
         //Return it all as a nice class
         return new Rank(
@@ -275,16 +274,16 @@ public class ScoreSystem {
         );
     }
 
-    private static com.flornian.ScoreSystem.UserScore getUserScoreFromId(List<com.flornian.ScoreSystem.UserScore> array, String id) {
-        for (com.flornian.ScoreSystem.UserScore score : array)
+    private static UserScore getUserScoreFromId(List<UserScore> array, String id) {
+        for (UserScore score : array)
             if (score.getUID().equals(id))
                 return score;
 
-        return new com.flornian.ScoreSystem.UserScore("Not Found", -1);
+        return new UserScore("Not Found", -1);
     }
 
-    private static com.flornian.ScoreSystem.UserScore[] sortUserScoreArray(com.flornian.ScoreSystem.UserScore[] array) {
-        com.flornian.ScoreSystem.UserScore temp;
+    private static UserScore[] sortUserScoreArray(UserScore[] array) {
+        UserScore temp;
         for (int i = 1; i < array.length; i++) {
             for (int j = i; j > 0; j--) {
                 if (array[j].getScore() < array[j - 1].getScore()) {
@@ -298,9 +297,9 @@ public class ScoreSystem {
         return array;
     }
 
-    private static com.flornian.ScoreSystem.UserScore[] reverseUserScoreArray(com.flornian.ScoreSystem.UserScore[] array) {
+    private static UserScore[] reverseUserScoreArray(UserScore[] array) {
         for (int i = 0; i < array.length / 2; i++) {
-            com.flornian.ScoreSystem.UserScore temp = array[i];
+            UserScore temp = array[i];
             array[i] = array[array.length - i - 1];
             array[array.length - i - 1] = temp;
         }
@@ -311,7 +310,7 @@ public class ScoreSystem {
     public static int getPoints(Member m) throws IOException {
         //Get basic variables for reading and writing score
         int userLine = getUserLine(m.getId());
-        List<String> lines = com.flornian.IO.readSmallTextFile(com.flornian.Vars.scoreFile);
+        List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
 
         if (userLine == -1)
             return 0;
@@ -319,11 +318,11 @@ public class ScoreSystem {
         return Integer.parseInt(lines.get(userLine).split(":")[1]);
     }
 
-    public static com.flornian.ScoreSystem.UserScore[] getLeaderboard() throws IOException {
-        List<String> lines = com.flornian.IO.readSmallTextFile(com.flornian.Vars.scoreFile);
-        com.flornian.ScoreSystem.UserScore[] scores = new com.flornian.ScoreSystem.UserScore[lines.size()];
-        com.flornian.ScoreSystem.UserScore[] sorted;
-        com.flornian.ScoreSystem.UserScore[] leaderboard = new com.flornian.ScoreSystem.UserScore[5];
+    public static UserScore[] getLeaderboard() throws IOException {
+        List<String> lines = IO.readSmallTextFile(Vars.scoreFile);
+        UserScore[] scores = new UserScore[lines.size()];
+        UserScore[] sorted;
+        UserScore[] leaderboard = new UserScore[5];
 
         //Put all the users and their scores in an UserScore array
         for (int i = 0; i < lines.size(); i++) {

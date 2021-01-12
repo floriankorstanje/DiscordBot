@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 
 public class Output {
     public static String getError(int code) {
-        final String[] codes = { "-1 [Internal/Other Error]", "0 [Success]", "1 [Unknown Command]", "2 [Unknown Arguments]", "3 [No Permission]", "4 [Unknown UID]", "5 [Function Disabled]" };
+        final String[] codes = {"-1 [Internal/Other Error]", "0 [Success]", "1 [Unknown Command]", "2 [Unknown Arguments]", "3 [No Permission]", "4 [Unknown UID]", "5 [Function Disabled]"};
         return codes[code + 1];
     }
 
@@ -19,7 +19,7 @@ public class Output {
 
         //Set embed information
         b.setTitle(Vars.guild.getJDA().getSelfUser().getName() + " log message");
-        b.setColor(Util.random(0x0, 0xFFFFFF));
+        b.setColor(executor.getColor());
         b.setFooter(Vars.botName + " made by " + Vars.botOwner);
 
         //Add actual message to the embed

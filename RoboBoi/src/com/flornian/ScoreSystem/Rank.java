@@ -2,12 +2,12 @@ package com.flornian.ScoreSystem;
 
 //Just an easy class to transfer some user data about their rank
 public class Rank {
-    private final com.flornian.ScoreSystem.UserScore above, below;
+    private final UserScore above, below;
     private final int totalMembers, position, score;
     private final boolean higherPeeps, superPeeps;
     private final double higherPeepsProgress, superPeepsProgress;
 
-    public Rank(int score, com.flornian.ScoreSystem.UserScore above, com.flornian.ScoreSystem.UserScore below, int totalMembers, int position, boolean higherPeeps, boolean superPeeps, double higherPeepsProgress, double superPeepsProgress) {
+    public Rank(int score, UserScore above, UserScore below, int totalMembers, int position, boolean higherPeeps, boolean superPeeps, double higherPeepsProgress, double superPeepsProgress) {
         this.score = score;
         this.above = above;
         this.below = below;
@@ -23,7 +23,7 @@ public class Rank {
         return score;
     }
 
-    public com.flornian.ScoreSystem.UserScore getAbove() {
+    public UserScore getAbove() {
         return above;
     }
 

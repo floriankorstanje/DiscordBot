@@ -57,7 +57,7 @@ public class Main {
             ArrayList<String> lines = new ArrayList<>();
             lines.add("YOUR DISCORD BOT TOKEN HERE");
 
-            com.flornian.IO.writeSmallTextFile(lines, Vars.tokenFile);
+            IO.writeSmallTextFile(lines, Vars.tokenFile);
         }
 
         //Get the bot token from the auth file (which is ignored by github)
@@ -129,17 +129,17 @@ public class Main {
             while (!Thread.interrupted()) {
                 try {
                     //Set the variables from the settings file
-                    Vars.botPrefix = com.flornian.Config.BotSettings.getValueString("bot_prefix");
-                    Vars.botLogChannel = com.flornian.Config.BotSettings.getValueString("bot_log_channel");
-                    Vars.higherPeopleRole = com.flornian.Config.BotSettings.getValueString("higher_people_role");
-                    Vars.superPeopleRole = com.flornian.Config.BotSettings.getValueString("super_people_role");
-                    Vars.joinMessage = com.flornian.Config.BotSettings.getValueString("join_message");
-                    Vars.leaveMessage = com.flornian.Config.BotSettings.getValueString("leave_message");
-                    Vars.banMessage = com.flornian.Config.BotSettings.getValueString("ban_message");
-                    Vars.unbanMessage = com.flornian.Config.BotSettings.getValueString("unban_message");
-                    Vars.roleGetMessage = com.flornian.Config.BotSettings.getValueString("role_get_message");
-                    Vars.boostMessage = com.flornian.Config.BotSettings.getValueString("boost_message");
-                    Vars.enableScoreSystem = com.flornian.Config.BotSettings.getValueBoolean("enable_score_system");
+                    Vars.botPrefix = BotSettings.getValueString("bot_prefix");
+                    Vars.botLogChannel = BotSettings.getValueString("bot_log_channel");
+                    Vars.higherPeopleRole = BotSettings.getValueString("higher_people_role");
+                    Vars.superPeopleRole = BotSettings.getValueString("super_people_role");
+                    Vars.joinMessage = BotSettings.getValueString("join_message");
+                    Vars.leaveMessage = BotSettings.getValueString("leave_message");
+                    Vars.banMessage = BotSettings.getValueString("ban_message");
+                    Vars.unbanMessage = BotSettings.getValueString("unban_message");
+                    Vars.roleGetMessage = BotSettings.getValueString("role_get_message");
+                    Vars.boostMessage = BotSettings.getValueString("boost_message");
+                    Vars.enableScoreSystem = BotSettings.getValueBoolean("enable_score_system");
                     Vars.enableSystemMessages = BotSettings.getValueBoolean("enable_system_messages");
 
                     //Wait 5s
