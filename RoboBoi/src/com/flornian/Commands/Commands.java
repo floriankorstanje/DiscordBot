@@ -17,27 +17,8 @@ import java.util.List;
 
 public class Commands {
     public static int help(CommandEvent e) {
-        //Make an embed from the help list
-        EmbedBuilder builder = new EmbedBuilder();
-
-        //Add basic stuff to the embed
-        builder.setTitle("Help for " + Vars.botName + " v" + Vars.version);
-        builder.setFooter(Vars.botName + " made by " + Vars.botOwner);
-        builder.setColor(e.getMember().getColor());
-        builder.addField("[] - Optional argument; <> - Required argument", "", false);
-
-        //Add all the commands
-        builder.addField(Vars.botPrefix + "modscore <uid> <add|remove|set> <score>", "[*ADMIN ONLY*] Modifies a user's score.", false);
-        builder.addField(Vars.botPrefix + "say <channel-id> <message>", "[*ADMIN ONLY*] Send a message as the bot in the specified channel.", false);
-        builder.addField(Vars.botPrefix + "config <set|get|help> [variable-name|*] [value-to-set]", "[*ADMIN ONLY*] Modifies or returns a config variable for the bot.", false);
-        builder.addField(Vars.botPrefix + "score [uid]", "Shows your score. Shows someone else's score when given an argument.", false);
-        builder.addField(Vars.botPrefix + "leaderboard", "Shows the score leaderboard.", false);
-        builder.addField(Vars.botPrefix + "info", "Shows some bot info.", false);
-        builder.addField(Vars.botPrefix + "userinfo [uid]", "Shows info about the user.", false);
-        builder.addField(Vars.botPrefix + "help", "Shows this.", false);
-
-        //Send the help message
-        e.getChannel().sendMessage(builder.build()).queue();
+        //Send help
+        e.getChannel().sendMessage("For commands, go to https://github.com/floriankorstanje/RoboBoi/wiki/Bot-Commands").queue();
 
         return 0;
     }
@@ -435,6 +416,12 @@ public class Commands {
 
         //Send the message
         e.getChannel().sendMessage(builder.build()).queue();
+
+        return 0;
+    }
+
+    public static int ping(CommandEvent e) {
+
 
         return 0;
     }

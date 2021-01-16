@@ -19,3 +19,4 @@ super_people_role=794876721908154388
 
 enable_score_system=false
 enable_system_messages=true
+execute_command_on_message_edit=true

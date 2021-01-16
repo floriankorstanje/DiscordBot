@@ -20,6 +20,9 @@ public class CommandHandler extends ListenerAdapter {
 
     @Override
     public void onGuildMessageUpdate(@NotNull GuildMessageUpdateEvent event) {
+        if(!Vars.executeCommandOnMessageEdit)
+            return;
+
         CommandEvent commandEvent = new CommandEvent(event);
 
         HandleCommand(commandEvent);
@@ -78,6 +81,9 @@ public class CommandHandler extends ListenerAdapter {
             } else if (cmd.equalsIgnoreCase("userinfo")) {
                 //Command $userinfo
                 errcode = Commands.userinfo(event, args);
+            } else if(cmd.equalsIgnoreCase("ping")) {
+                //Command $ping
+                errcode = Commands.ping(event);
             } else {
                 //If the command is unrecognized, set recognized and success to false
                 recognized = false;

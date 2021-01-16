@@ -61,7 +61,8 @@ public class BotSettings {
                 return Result.INVALID_VALUE;
             }
         } else if(setting.equalsIgnoreCase("enable_score_system") ||
-                setting.equalsIgnoreCase("enable_system_messages")) {
+                setting.equalsIgnoreCase("enable_system_messages") ||
+                setting.equalsIgnoreCase("execute_command_on_message_edit")) {
             //Check if the value is a valid boolean
             try {
                 Boolean.parseBoolean(value);

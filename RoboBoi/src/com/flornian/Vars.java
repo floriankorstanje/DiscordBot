@@ -15,7 +15,7 @@ public class Vars {
     public static String botPrefix;
     public static Guild guild;
     public static Random random = new Random();
-    public static String version = "1.12.2_2";
+    public static String version = "1.12.3_5";
     public static Permission adminCommandPermission = Permission.MESSAGE_MANAGE;
     public static String joinMessage;
     public static String leaveMessage;
@@ -39,4 +39,5 @@ public class Vars {
     //Enable features of the bot
     public static boolean enableScoreSystem;
     public static boolean enableSystemMessages;
+    public static boolean executeCommandOnMessageEdit;
 }

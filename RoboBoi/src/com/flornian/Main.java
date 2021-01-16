@@ -35,13 +35,6 @@ public class Main {
         if (!folder.exists())
             folder.mkdirs();
 
-        //Check if settings file exists.
-        if (!new File(Vars.settingsFile).exists()) {
-            //Tell the user to first download a config file and set the bot up
-            System.out.println("Please visit http://fkorstanje.nl/aa/RoboBoi to set the bot up for first usage. You only need to do this once.");
-            return;
-        }
-
         //Check if score file exists.
         if (!new File(Vars.scoreFile).exists()) {
             //Create score file with default settings if it doesn't exist
@@ -58,6 +51,13 @@ public class Main {
             lines.add("YOUR DISCORD BOT TOKEN HERE");
 
             IO.writeSmallTextFile(lines, Vars.tokenFile);
+        }
+
+        //Check if settings file exists.
+        if (!new File(Vars.settingsFile).exists()) {
+            //Tell the user to first download a config file and set the bot up
+            System.out.println("Please visit https://github.com/floriankorstanje/RoboBoi/wiki/ to set the bot up for first usage. You only need to do this once.");
+            return;
         }
 
         //Get the bot token from the auth file (which is ignored by github)
@@ -141,6 +141,7 @@ public class Main {
                     Vars.boostMessage = BotSettings.getValueString("boost_message");
                     Vars.enableScoreSystem = BotSettings.getValueBoolean("enable_score_system");
                     Vars.enableSystemMessages = BotSettings.getValueBoolean("enable_system_messages");
+                    Vars.enableSystemMessages = BotSettings.getValueBoolean("execute_command_on_message_edit");
 
                     //Wait 5s
                     Thread.sleep(5000);
